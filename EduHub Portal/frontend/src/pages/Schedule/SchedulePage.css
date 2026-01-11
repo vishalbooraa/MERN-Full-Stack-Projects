@@ -1,0 +1,92 @@
+.schedule-page-wrapper {
+  width: 90%;
+  max-width: 1200px;
+  margin: 5rem auto 2rem auto;
+  text-align: center;
+}
+
+.schedule-page-title {
+  font-size: 2.5rem;
+  color: #1a237e;
+  margin-bottom: 2rem;
+}
+
+.schedule-list {
+  display: flex;
+  flex-direction: column; /* One schedule per row */
+  gap: 2.5rem;
+  margin-bottom: 2rem;
+  align-items: center;
+}
+
+.schedule-card {
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 3rem 0;
+  width: 90%; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.schedule-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.schedule-card img {
+  width: 100%;
+  height: 600px; /* Increase height */
+  object-fit: cover;
+  border-radius: 5px;
+  margin: 0.5rem 0;
+}
+
+.schedule-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.delete-btn,
+.upload-schedule-btn {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.delete-btn {
+  background-color: #d32f2f;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #9a0007;
+  transform: scale(1.05);
+}
+
+.delete-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.upload-schedule-btn {
+  background-color: #007bff;
+  color: white;
+  margin-top: 2rem;
+}
+
+.upload-schedule-btn:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}

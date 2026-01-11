@@ -1,0 +1,75 @@
+.upload-pyq-wrapper {
+  width: 90%;
+  max-width: 600px;
+  margin: 6rem auto 3rem auto;
+  background: #f9f9f9;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.upload-pyq-wrapper h1 {
+  font-size: 2rem;
+  color: #1a237e;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.upload-message {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #0d47a1;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="file"] {
+  padding: 0.6rem;
+  border: 1px solid #1976d2;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus {
+  outline: none;
+  border-color: #0d47a1;
+}
+
+.upload-btn {
+  background-color: #1976d2 !important;
+  color: white;
+  font-size: 1.1rem;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease !important;
+}
+
+.upload-btn:hover {
+  background-color: #115293 !important;
+  transform: scale(1.05);
+}
+
+.upload-btn:disabled {
+  background-color: #90caf9;
+  cursor: not-allowed;
+}

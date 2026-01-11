@@ -1,0 +1,101 @@
+/* Wrapper for the whole page */
+.lf-list-page-wrapper {
+    width: 90%;
+    max-width: 1300px;
+    margin: 4rem auto;
+    text-align: center;
+}
+
+/* Page title */
+.lf-list-page-title {
+    font-size: 2.5rem;
+    color: #1a237e;
+    margin-bottom: 2rem;
+}
+
+/* Error message */
+.lf-list-error {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+/* Flex container for cards */
+.lf-list-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+/* Card styling */
+.lf-list-card {
+    flex: 0 1 38%;
+    /* two cards per row */
+    background-color: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    transition: all 0.3s ease;
+
+    /* ✅ Fix long text overflow */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    overflow: hidden;
+}
+
+/* Hover effect */
+.lf-list-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    background-color: #f4f6ff;
+}
+
+/* Text styling */
+.lf-list-card h2 {
+    color: #0d47a1;
+    margin-bottom: 0.5rem;
+    font-size: 1.4rem;
+}
+
+.lf-list-card p {
+    color: #333;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+    word-break: break-word;
+    /* ✅ ensures long words wrap */
+}
+
+.lf-delete-btn {
+    margin-top: 1rem;
+    background-color: #e53935;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.lf-delete-btn:hover {
+    background-color: #c62828;
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(229, 57, 53, 0.4);
+}
+
+.lf-delete-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+
+/* Mobile responsiveness */
+@media screen and (max-width: 900px) {
+    .lf-list-card {
+        flex: 0 1 80%;
+        /* single card on small screens */
+    }
+}

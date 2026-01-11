@@ -1,0 +1,99 @@
+.authBody{
+    height: 100vh;
+    width: 100vw;
+    background-color: #f5f7fa;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.authContainer{
+    margin-top: 2rem;
+    box-shadow: 5px 5px 10px gray;
+    padding: 5rem;
+    border-radius: 1rem;
+    background-color: #ffffff;
+}
+
+.authInp{
+    width: 30vw;
+    height: 4vh;
+    border-radius: 0.3rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    padding: 0.3rem;
+    border: 1px solid grey;
+}
+
+.authBtn{
+    background-color: #2c74b3;
+    font-size: 1rem;
+    height: 5vh;
+    color: white
+}
+
+#heading{
+    font-size: 2.5rem;
+    color: #0a2647;
+}
+
+.authToggle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.toggleBtn {
+  padding: 0.6rem 1.2rem;
+  background-color: #e9eef5;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+
+.toggleBtn:first-child {
+  border-radius: 0.5rem 0 0 0.5rem;
+}
+
+
+.toggleBtn:last-child {
+  border-radius: 0 0.5rem 0.5rem 0;
+  
+}
+
+.toggleBtn.active {
+  background-color: #2c74b3;
+  color: white;
+}
+
+
+
+@media (max-width: 600px) {
+  .authContainer {
+    width: 60vw;
+    padding: 2rem;
+  }
+
+  .authInp {
+    font-size: 0.9rem;
+    height: auto;
+    width: 12rem;
+  }
+
+  .authBtn {
+    font-size: 0.9rem;
+    height: 2.5rem;
+  }
+
+  #heading {
+    font-size: 1.6rem;
+  }
+
+  .toggleBtn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+}

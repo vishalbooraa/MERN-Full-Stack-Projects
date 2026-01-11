@@ -1,0 +1,33 @@
+.hero{
+    background-image: url("/piet.jpg");
+    width: 90vw;
+    height: 80vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin:1rem 5rem;
+
+    display: flex;
+    align-items: center;
+}
+
+.hero-content{
+    margin-left: 5rem;
+    color:#ddd;
+
+}
+
+.hero-h{
+    margin-bottom: 1rem;
+    font-size: 4rem;
+}
+
+.hero-p{
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+.hero-h2{
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}

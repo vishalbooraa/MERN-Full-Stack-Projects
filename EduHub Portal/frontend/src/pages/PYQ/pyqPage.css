@@ -1,0 +1,210 @@
+/* -------------------------------------------------------------------- */
+/* PYQ PAGE CSS - Mirroring PYQ Page Layout */
+/* -------------------------------------------------------------------- */
+
+.pyq-page-wrapper {
+  width: 90%;
+  max-width: 1700px;
+  margin: 1rem auto 2rem auto; 
+  text-align: center; 
+}
+
+.pyq-page-wrapper h1 {
+  font-size: 2rem;
+  color: #1a237e;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* ------------------------- Search Bar ------------------------- */
+.pyq-search-bar-container {
+  margin-bottom: 1.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.pyq-search-input-field {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 500px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pyq-search-input-field:focus {
+  border-color: #1976d2;
+  box-shadow: 0 0 8px rgba(25, 118, 210, 0.2);
+  outline: none;
+}
+
+/* ------------------------- Notes Grid Layout ------------------------- */
+.pyq-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr; /* 4 columns for large screens */
+  gap: 30px;
+  margin-top: 0.5rem;
+  text-align: left; /* Align text properly within cards */
+}
+
+/* ------------------------- Subject Section ------------------------- */
+.pyq-subject-section {
+  border: 1px solid #e0e0e0;
+  padding: 1rem;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+.pyq-subject-section h2 {
+  font-size: 1.8rem;
+  color: #0d47a1;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #1976d2;
+  padding-bottom: 0.5rem;
+  word-break: break-word;
+}
+
+/* ------------------------- Year Section ------------------------- */
+.pyq-year-section {
+  margin-left: 0;
+  margin-bottom: 1rem;
+}
+
+.pyq-year-section h3 {
+  font-size: 1.4rem;
+  color: #1565c0;
+  margin-bottom: 0.5rem;
+  word-break: break-word;
+}
+
+/* ------------------------- Note Item Card ------------------------- */
+.pyq-item-card {
+  background: #fff;
+  padding: 1rem;
+  margin-bottom: 0.8rem;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  word-break: break-word;
+}
+
+.pyq-item-card p {
+  margin: 0;
+  width: 100%;
+  font-size: 1rem;
+}
+
+/* ------------------------- Actions ------------------------- */
+.pyq-item-actions {
+  display: flex;
+  justify-content: flex-start; /* Align buttons to left */
+  width: 100%;
+  margin-top: 0.8rem;
+  align-items: center; /* vertically align buttons */
+  gap: 0.5rem; /* spacing between buttons */
+}
+
+/* ------------------------- Buttons ------------------------- */
+.pyq-download-btn,
+.pyq-delete-btn {
+  padding: 0.4rem 0.8rem;
+  line-height: normal;
+  height: auto;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pyq-download-btn {
+  background-color: #1976d2;
+  color: white;
+}
+
+.pyq-download-btn:hover {
+  background-color: #115293;
+  transform: scale(1.05);
+}
+
+.pyq-delete-btn {
+  background-color: #d32f2f;
+  color: white;
+}
+
+.pyq-delete-btn:hover {
+  background-color: #9a0007;
+  transform: scale(1.05);
+}
+
+.pyq-delete-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* ------------------------- Error Message ------------------------- */
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+/* -------------------------------------------------------------------- */
+/* 📱 MEDIA QUERIES (Kept Last) */
+/* -------------------------------------------------------------------- */
+
+/* Medium screens → 2 subjects per row */
+@media (max-width: 1024px) {
+  .pyq-content-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+}
+
+/* Small screens → 1 subject per row */
+@media (max-width: 768px) {
+  .pyq-content-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .pyq-item-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .pyq-item-actions {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap; /* allow buttons to wrap if screen is narrow */
+  }
+}
+
+/* Extra Small Screens */
+@media (max-width: 480px) {
+  .pyq-search-input-field {
+    width: 90%;
+  }
+
+  .pyq-subject-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .pyq-year-section h3 {
+    font-size: 1.2rem;
+  }
+
+  .pyq-download-btn,
+  .pyq-delete-btn {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
+  }
+}

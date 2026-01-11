@@ -1,0 +1,38 @@
+.ai-heading{
+    color:#2c74b3
+}
+
+.chats{
+    max-width: 700px;
+    overflow-y: auto;
+    padding: 8rem;
+}
+
+.userDiv{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.gptDiv{
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.userMessage{
+    color: #2c74b3;
+    background-color: #a4edff;
+    padding: 10px 20px;
+    border-radius: 14px;
+    margin-left: 15rem;
+    max-width: 500px;
+    width: fit-content;
+}
+
+
+.hljs{
+    border-radius: 14px !important;
+}
+
+pre{
+    white-space: pre-wrap;
+}

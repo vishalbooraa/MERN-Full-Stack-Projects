@@ -1,0 +1,100 @@
+.noticeboard-page {
+  text-align: center;
+  margin-top: 1rem;
+  padding: 2rem;
+}
+
+.noticeboard-title {
+  font-size: 2.5rem;
+  color: #1a237e;
+  margin-bottom: 2rem;
+}
+
+.add-notice-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 2rem;
+  transition: background 0.3s ease;
+}
+
+.add-notice-btn:hover {
+  background-color: #0056b3;
+}
+
+.notice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 80%;
+  margin: 0 auto;
+}
+
+/* Each notice card */
+.notice-card {
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* Attractive hover effect */
+.notice-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  background-color: #f4f6ff;
+}
+
+/* Notice text styling */
+.notice-card h2 {
+  color: #0d47a1;
+  margin-bottom: 0.5rem;
+}
+
+.notice-card p {
+  color: #333;
+  line-height: 1.5;
+}
+
+.notice-card small {
+  display: block;
+  margin-top: 0.8rem;
+  color: #666;
+}
+
+/* Delete Button Styling */
+.delete-btn {
+  margin-top: 1rem;
+  background-color: #e53935;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+/* Hover + Active states */
+.delete-btn:hover {
+  background-color: #c62828;
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(229, 57, 53, 0.4);
+}
+
+.delete-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+}
