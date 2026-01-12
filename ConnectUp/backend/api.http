@@ -1,0 +1,53 @@
+POST http://localhost:9080/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "vinay123",
+    "password": "123456",
+    "email": "vinay@gmail.com",
+    "name": "Vinay"
+}
+
+###
+
+POST http://localhost:9080/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "vishal@gmail.com",
+    "password": "123456"
+}
+
+###
+
+POST http://localhost:9080/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "vinay@gmail.com",
+    "password": "123456"
+}
+
+###
+GET http://localhost:9080/get_user_and_profile HTTP/1.1
+Content-Type: application/json
+
+{
+    "token":"1700a269ae8c05f3c0622a525ccd224d4ca69c0cca9fc7c3a5fdd28864d21dc6"
+}
+
+###
+POST http://localhost:9080/update_profile_data HTTP/1.1
+Content-Type: application/json
+
+{
+    "token":"1700a269ae8c05f3c0622a525ccd224d4ca69c0cca9fc7c3a5fdd28864d21dc6",
+    "bio":"Hello, I am Vishal!",
+    "currentPost":"Software Engineer"
+}
+
+###
+GET http://localhost:9080/all_user_profiles HTTP/1.1
+Content-Type: application/json
+
+
