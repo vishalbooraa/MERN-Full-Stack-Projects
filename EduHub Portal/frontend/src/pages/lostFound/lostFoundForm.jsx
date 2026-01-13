@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./LostFoundForm.css";
+import "./lostFoundForm.css";
 import Navbar from "../navbar";
 
 const LostFoundForm = () => {
