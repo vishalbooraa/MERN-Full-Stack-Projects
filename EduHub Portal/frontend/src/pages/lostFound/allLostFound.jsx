@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../navbar";
 import { useAuth } from "../authContext";
-import "./alllostFound.css";
+import "./allLostFound.css";
 
 const AllLostFoundPage = () => {
   const [items, setItems] = useState([]);
