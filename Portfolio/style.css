@@ -1,0 +1,480 @@
+*{
+    margin:0px;
+    padding:0px;
+    font-family: 'Poppins',sans-serif;
+    box-sizing: border-box;
+}
+html {
+    scroll-behavior: smooth;
+}
+body{
+    font-family: 'Poppins', sans-serif;
+    background-color: black;
+    color:white;
+}
+.header{
+    width:100%;
+    height:100vh;
+    background-image:url(vishal.jpg);
+    background-size: cover;
+}
+.logo{
+    height:100px;
+    width: 200px;
+}
+
+.logo-text{
+    font-family: 'Poppins', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    background: linear-gradient(90deg, #ff7aa2 0%, #ff004f 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+.logo-text:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 18px 36px rgba(0,0,0,0.7);
+}
+.container{
+    padding: 10px 10%;
+}
+.nav{
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+}
+.nav ul li{
+    display: inline-block;
+    list-style: none;
+    margin:10px 20px;
+}
+.nav ul li a{
+    color:white;
+    text-decoration:none;
+    font-size: 18px;
+    position: relative;
+}
+.nav ul li a::after{
+    content:'';
+    width:0%;
+    height:3px;
+    background-color: #ff004f;
+    position: absolute;
+    left:0;
+    bottom:-6px;
+    transition: 0.5s;
+}
+.nav ul li a:hover::after{
+    width:100%
+}
+.header-text{
+    margin-top:20%;
+    font-size: 30px;
+}
+.header-text h1{
+    font-size: 60px;
+    margin-top: 20px;
+}
+.header-text span{
+   color:#ff004f 
+}
+
+/*----------------------------About-----------------------------*/
+
+.about{
+    padding: 80px 0;
+    color:#ababab;
+}
+.row{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.col1{
+    flex-basis: 35%;
+}
+.col1 img{
+    width:100%;
+    height: 600px;
+    border-radius: 15px;
+}
+.col2{
+    flex-basis: 60%;
+}
+.about-text{
+    font-size: 60px;
+    font-weight: 600;
+    color:white;
+}
+.about-titles{
+    display: flex;
+    margin: 20px 0 20px;
+}
+.about-title1{
+    margin-right: 50px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor:pointer;
+    position: relative;
+}
+.about-title2{
+    margin-right: 50px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor:pointer;
+    position: relative;
+}
+.about-title3{
+    margin-right: 50px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor:pointer;
+    position: relative;
+}
+.about-title1::after{
+    content:'';
+    width:0%;
+    height:3px;
+    background-color: #ff004f;
+    position: absolute;
+    left:0;
+    bottom:-8px;
+    transition: 0.5s;
+}
+.about-title2::after{
+    content:'';
+    width:0%;
+    height:3px;
+    background-color: #ff004f;
+    position: absolute;
+    left:0;
+    bottom:-8px;
+    transition: 0.5s;
+}
+.about-title3::after{
+    content:'';
+    width:0%;
+    height:3px;
+    background-color: #ff004f;
+    position: absolute;
+    left:0;
+    bottom:-8px;
+    transition: 0.5s;
+}
+.about-title1.active-title::after{
+    width:50%;
+}
+.about-title2.active-title::after{
+    width:50%;
+}
+.about-title3.active-title::after{
+    width:50%;
+}
+.about-content1 ul li{
+    list-style: none;
+    margin:10px 0;
+}
+.about-content1 ul li span{
+    color:#b54769;
+    font-size: 14px;
+}
+.about-content2 ul li{
+    list-style: none;
+    margin:10px 0;
+}
+.about-content2 ul li span{
+    color:#b54769;
+    font-size: 14px;
+}
+.about-content3 ul li{
+    list-style: none;
+    margin:10px 0;
+}
+.about-content3 ul li span{
+    color:#b54769;
+    font-size: 14px;
+}
+
+.hide{
+    display:none;
+}
+
+
+/* -------------------------Services Section-------------------------- */
+.services{
+    padding: 30px 0;
+}
+.services-list{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    grid-gap:40px;
+    margin-top: 50px;
+}
+.services-list div{
+    background-color: #262626;
+    padding:40px;
+    font-size: 13px;
+    font-weight: 300;
+    border-radius:10px;
+    transition: background 0.5s, transform 0.5s;
+}
+
+
+.services-list div i{
+    font-size: 50px;
+    margin-bottom: 30px;
+}
+
+/* Prevent duplicate Font Awesome icons (SVG + ::before) inside service cards */
+.services-list div i svg{
+    display: none !important;
+}
+
+.services-list div h2{
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+.services-list div a{
+    text-decoration: none;
+    color:white;
+    font-size: 12px;
+    margin-top: 20px;
+    display: inline-block;
+}
+.services-list div:hover{
+    background-color: #ff004f;
+    transform: translateY(-10px);
+}
+
+/* ----------------Portfolio-------------------- */
+
+
+#portfolio{
+    padding: 50 0;
+}
+.swork{
+    height: 400px;
+    width:375px;
+    border-radius: 10px;
+    display: block;
+    transition: transform 0.5s;
+}
+.work-list{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    grid-gap:40px;
+    margin-top: 50px;
+}
+.work{
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.layer{
+    height: 0;
+    width:100%;
+    border-radius: 10px;
+    background: linear-gradient(rgba(0,0,0,0.6),#ff004f);
+    position: absolute;
+    top: auto;
+    bottom:0;
+    overflow: hidden;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0 40px;
+    text-align: center;
+    font-size: 14px;
+    transition: height 0.5s;
+}
+.layer h3{
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+.layer a{
+    color: #ff004f;
+    margin-top: 20px;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 60px;
+    width: 60px;
+    height: 60px;
+    background: #fff;
+    border-radius: 50%;
+
+}
+.work:hover .layer{
+    height: 100%;
+}
+.work:hover .swork{
+    transform: scale(1.1);
+}
+.btn{
+    display: block;
+    margin: 50px auto; 
+    border: 1px solid #ff004f;
+    width: fit-content;
+    padding: 14px 50px;
+    border-radius: 6px;
+}
+.btn a{
+    text-decoration: none;
+    color:#fff;
+}
+.btn:hover{
+    background-color:#ff004f;
+}
+
+/* -----------------------contact------------------------ */
+
+.contact-left{
+    flex-basis: 35%;
+}
+.contact-right{
+    flex-basis: 65%;
+}
+.contact-left p{
+    margin-top: 30px;
+}
+.social-icon{
+    margin-top: 30px;
+}
+.contact-left p i{
+    color:#ff004f;
+    margin-right: 10px;
+}
+.social-icon a{
+    margin-left: 5px;
+    size: 30px;
+    color: #ababab;
+    display: inline-block;
+    transition: transform 0.5s;
+}
+.social-icon a:hover{
+    color:#ff004f;
+    transform: translateY(-5px);
+}
+input,textarea{
+    border:none;
+    display:block;
+    width:100%;
+    margin-bottom: 30px;
+    background-color: #262626;
+    color:#fff;
+    padding: 15px;
+    size:14px;
+    border-radius: 8px;
+    outline: none;
+}
+.btn2{
+    border:2px solid #ff004f;
+    background-color: #ff004f;
+    color: #fff;
+    padding: 5px 10px;
+    margin-top: 50px;
+    border-radius: 5px;
+}
+.btn3{
+    border:2px solid #ff004f;
+    background-color: #ff004f;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+/* ------------------------Responsive------------------------------- */
+
+.nav ul .fa-x{
+    display: none;
+}
+.nav .fa-sharp{
+    display: none;
+}
+
+
+@media only screen and (max-width:932px) {
+    .header{
+        background-image:url("vishal3.jpg");
+    }
+    .logo{
+        height:50px;
+        width:100px;
+        margin-left:0px;
+        margin-top: 0px;
+    }
+    .nav ul{
+        list-style: none;
+        margin-top:20px;
+        position: fixed;
+        right:-100px;
+        top: 0;
+        background-color: #ff004f;
+        width: 100px;  
+        height: 35vh;
+        transition: right 0.5s;  
+    }
+    .nav ul li{
+        display: block;
+        margin-top: 40px;
+        margin-left: 10px;
+    }
+    .nav ul .fa-x{
+        display: block;
+        position:absolute;
+        top:0;
+        margin-left: 10px;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+    .nav .fa-sharp{
+        display: block;
+    }
+    .header-text{
+        margin-top:20%;
+        font-size: 20px;
+    }
+    .header-text h1{
+        font-size: 40px;
+        margin-top: 20px;
+    }
+
+    /* ---------------------about----------------------------- */
+
+    .about{
+        color:#ababab;
+        margin-top: 0;
+    }
+    
+    .col1{
+        flex-basis: 100%;
+    }
+    .col2{
+        flex-basis: 100%;
+    }
+
+    .contact-left{
+        flex-basis: 100%;
+    }
+    .contact-right{
+        margin-top: 50px;
+        flex-basis: 100%;
+    }
+    .about-text{
+        font-size: 60px;
+        font-weight: 600;
+        color:white;
+        margin:50px 0;
+    }
+    
+    
+}
