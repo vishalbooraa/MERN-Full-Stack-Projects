@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // Serve static files
-app.use(express.static(path.join(__dirname)));
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 // Nodemailer transporter configuration
@@ -29,7 +29,7 @@ const transporter = nodemailer.createTransport({
 
 // Serve index.html on /
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 // Contact form endpoint
 app.post('/api/contact', async (req, res) => {
