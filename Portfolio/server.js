@@ -5,11 +5,17 @@ const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const path = require('path');
+
+
+
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// Serve static files
+app.use(express.static(__dirname));
 
 // Nodemailer transporter configuration
 const transporter = nodemailer.createTransport({
@@ -20,6 +26,10 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+// Serve index.html on /
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 // Contact form endpoint
 app.post('/api/contact', async (req, res) => {
   const { name, email, message } = req.body;
