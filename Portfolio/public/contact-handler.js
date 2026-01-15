@@ -8,7 +8,7 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
   const responseDiv = document.getElementById('responseMessage');
 
   try {
-    const response = await fetch('http://localhost:5000/api/contact', {
+    const response = await fetch('/api/contact', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
