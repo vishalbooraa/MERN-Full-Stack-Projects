@@ -464,7 +464,7 @@ input,textarea{
         top: 0;
         background-color: #ff004f;
         width: 100px;  
-        height: 43vh;
+        height: 45vh;
         transition: right 0.5s;
         border-radius: 5px;  
     }
