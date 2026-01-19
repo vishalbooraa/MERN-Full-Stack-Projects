@@ -16,7 +16,18 @@ const geistMono = Geist_Mono({
 export default function Home() {
   return (
     <>
-      <h2>Welcome to ConnectUp</h2>
+      <div className="container">
+        <p>ConnectUp Home Page</p>
+        <div className="mainContainer">
+          <div className="mainContainer-left">
+
+          </div>
+          <div className="mainContainer-right">
+
+          </div>
+
+        </div>
+      </div>
     </>
   );
 }
