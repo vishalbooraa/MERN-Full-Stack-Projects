@@ -1,0 +1,45 @@
+.container{
+    font-family: Poppins;
+    padding:1.2rem;
+}
+
+.mainContainer{
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    gap:4rem;
+    padding-inline:2rem;
+    height:80vh;
+}
+
+.mainContainerLeft{
+    flex:0.7;
+}
+
+.mainContrainerRight{
+    flex:0.3;
+}
+
+.mainContainerLeft > p:nth-child(1){
+    font-size:2.9rem;
+}
+
+.mainContainerLeft > p:nth-child(2){
+    font-size:1.7rem;
+    color: #555;
+}
+
+.buttonJoin{
+    width:fit-content;
+    font-size: 1.4rem;
+    text-align:center;
+    border-radius:20px;
+    cursor:pointer;
+    transition: all 0.3s ease;
+    margin-top: 0.8rem;
+    user-select: none;
+    background-color: rgb(166, 19, 132);
+    color: white;
+    padding-inline: 1.2rem;
+    padding-block: 0.8rem;
+}
