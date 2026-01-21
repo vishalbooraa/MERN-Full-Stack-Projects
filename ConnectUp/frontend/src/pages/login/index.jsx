@@ -1,10 +1,11 @@
+import UserLayout from '@/layout/UserLayout';
 import React from 'react';
 
 const LoginComponent = () => {
     return (
-        <div>
+        <UserLayout>
             <p>Login page</p>
-        </div>
+        </UserLayout>
     );
 }
 
