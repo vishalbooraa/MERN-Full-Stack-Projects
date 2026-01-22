@@ -1,1 +1,2 @@
-This repository contain my all mern full stack projects
+🚀 MERN Full Stack Projects
+This repository contains all my full stack MERN projects built while learning and practicing MongoDB, Express.js, React, and Node.js. These projects demonstrate my ability to design, develop, and deploy real-world web applications.
