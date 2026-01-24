@@ -1,0 +1,109 @@
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    background-color: snow;
+}
+
+.cardContainer{
+    height: 80vh;
+    width: 80vw;
+    display: flex;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: white;
+    box-shadow: 10px 10px 15px rgb(173,173,173);
+}
+
+/* LEFT SIDE */
+.cardContainerLeft{
+    flex: 0.6;
+    padding: 2rem;
+    text-align: center;
+}
+
+.cardLeftHeading{
+    font-weight: bold;
+    font-size: 1.8rem;
+}
+
+/* INPUTS */
+.inputContainers{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 1.3rem;
+    max-width: 400px;
+    margin: 0 auto;
+    gap: 1.5rem;
+}
+
+.inputRow{
+    display: flex;
+    gap: 1.2rem;
+    width: 100%;
+}
+
+.inputRow > .inputField{
+    flex: 1;
+}
+
+.inputField{
+    padding-inline: 1.3rem;
+    padding-block: 0.8rem;
+    outline: none;
+    border-radius: 10px;
+    border: 1px solid silver;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.inputField:focus{
+    border-color: #00488b;
+    box-shadow: 0 0 0 2px rgba(0,72,139,0.15);
+}
+
+/* BUTTON */
+.buttonWithOutline{
+    padding: 0.8rem 1.3rem;
+    background-color: rgb(236,236,236);
+    width: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.buttonWithOutline:hover{
+    background-color: #00488b;
+    color: white;
+}
+
+/* RIGHT SIDE */
+.cardContainerRight{
+    flex: 0.4;
+    background-color: #00488b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .cardContainer{
+        flex-direction: column;
+        height: auto;
+        width: 90vw;
+    }
+
+    .cardContainerRight{
+        display: none;
+    }
+
+    .inputRow{
+        flex-direction: column;
+    }
+}
