@@ -4,22 +4,28 @@ import { useRouter } from 'next/router';
 
 const NavBarComponent = () => {
     const router = useRouter();
+
     return (
         <div className={styles.container}>
             <nav className={styles.navbar}>
-                <h1 onClick={()=>{
-                    router.push("/")
-                }} style={{cursor:"pointer"}}>ConnectUp</h1>
-                 <div className={styles.navbarOptionContainer}>
-                    <div onClick={()=>{
-                        router.push("/login")
-                    }} className={styles.buttonJoin}>
+                <h1
+                    className={styles.logo}
+                    onClick={() => router.push("/")}
+                >
+                    ConnectUp
+                </h1>
+
+                <div className={styles.navbarOptionContainer}>
+                    <div
+                        className={styles.buttonJoin}
+                        onClick={() => router.push("/login")}
+                    >
                         <p>Be a part</p>
                     </div>
-                 </div>
+                </div>
             </nav>
         </div>
     );
-}
+};
 
 export default NavBarComponent;
