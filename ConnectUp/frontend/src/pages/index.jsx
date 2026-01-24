@@ -1,43 +1,48 @@
 import Head from "next/head";
 import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
-import styles from "@/styles/Home.module.css";
 import { useRouter } from "next/router";
+import styles from "@/styles/Home.module.css";
 import UserLayout from "@/layout/UserLayout";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 
 export default function Home() {
   const router = useRouter();
+
   return (
-    <UserLayout>
-      <div className={styles.container}>
-        <div className={styles.mainContainer}>
-          <div className={styles.mainContainerLeft}>
-            <p>Connect with friends without Exaggeration</p>
-            <p>A True Social media platform, with stories no blufs!</p>
+    <>
+      <Head>
+        <title>ConnectUp | Home</title>
+        <meta name="description" content="A true social media platform" />
+      </Head>
 
-            <div onClick={()=>{
-              router.push("/login")
-            }} className={styles.buttonJoin}>
-              <p>Join Now</p>
+      <UserLayout>
+        <div className={styles.container}>
+          <div className={styles.mainContainer}>
+
+            <div className={styles.mainContainerLeft}>
+              <p>Connect with friends without exaggeration</p>
+              <p>A true social media platform, with stories — no bluffs!</p>
+
+              <div
+                className={styles.buttonJoin}
+                onClick={() => router.push("/login")}
+              >
+                <p>Join Now</p>
+              </div>
             </div>
-          </div>
-          <div className={styles.mainContainerRight}>
-            <img src="images/connection.avif" alt=""/>
-          </div>
 
+            <div className={styles.mainContainerRight}>
+              <Image
+                src="/images/connection.avif"
+                alt="Connection Illustration"
+                width={500}
+                height={500}
+                priority
+              />
+            </div>
+
+          </div>
         </div>
-      </div>
-    </UserLayout>
+      </UserLayout>
+    </>
   );
 }
