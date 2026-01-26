@@ -89,6 +89,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    color: white;
+    flex-direction: column;
+    gap:1.2rem
+}
+
+.cardContainerRight .buttonWithOutline{
+    background-color: white;
+    color: #00488b;
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+.cardContainerRight .buttonWithOutline:hover{
+    background-color: #e6f0ff;
+    color: #00488b;
 }
 
 /* RESPONSIVE */
