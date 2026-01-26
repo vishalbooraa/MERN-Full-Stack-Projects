@@ -23,8 +23,6 @@ EduHub is a full-stack academic portal designed for colleges and universities to
   - Chat history stored per user
 - 📩 *Password Recovery*
   - OTP-based password reset using Nodemailer
-- 📱 *Responsive UI*
-  - Optimized for desktop, tablet, and mobile devices
 
 ---
 
@@ -68,7 +66,7 @@ EMAIL_USER=your_email
 EMAIL_PASS=your_email_password
 GOOGLE_GEMINI_API_KEY=your_api_key
 
-# backend
+# start backend
 nodemon index.js
 
 # frontend
