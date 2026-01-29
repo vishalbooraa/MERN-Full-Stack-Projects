@@ -32,18 +32,13 @@ StayBloom is a full-stack web application that allows users to browse, add, and 
 
 ## **Installation & Setup**
 
-1. Clone the repository:
 
-```bash
-git clone https://github.com/vishalbooraa/StayBloom
-cd staybloom
-
-2.Install dependencies:
+1.Install dependencies:
 
 npm install
 
 
-3.Create a .env file with the following:
+2.Create a .env file with the following:
 
 MONGO_URL=<Your MongoDB URL>
 SECRET=<Your Session Secret>
@@ -53,7 +48,7 @@ CLOUD_API_SECRET=<Your Cloudinary API Secret>
 MAP_TOKEN=<Your Mapbox Token>
 
 
-4.Run the application:
+3.Run the application:
 
-npm start
+nodemon app.js
 
