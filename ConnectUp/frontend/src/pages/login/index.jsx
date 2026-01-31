@@ -13,10 +13,10 @@ const LoginComponent = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const [userLoginMethod, setUserLoginMethod] = useState(false);
-  const [email, SetEmail] = useState("");
-  const [password, SetPassword] = useState("");
-  const [username, setUserName] = useState("");
+  const [userLoginMethod, setUserLoginMethod] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [name, setName] = useState("");
 
   useEffect(() => {
@@ -25,17 +25,35 @@ const LoginComponent = () => {
     }
   }, [loggedIn]);
 
-  useEffect(()=>{
-    dispatch(emptyMessage())
-  },[userLoginMethod])
+  useEffect(() => {
+    dispatch(emptyMessage());
+  }, [userLoginMethod]);
 
-  const handleLogin=()=>{
-    dispatch(loginUser({email,password}))
-  }
+  const handleSubmit = (e) => {
+    e?.preventDefault();
+    if (userLoginMethod) {
+      dispatch(loginUser({ email, password }));
+    } else {
+      dispatch(registerUser({ username, password, email, name }));
+    }
+  };
 
-  const handleRegister = () => {
-    console.log("registering");
-    dispatch(registerUser({ username, password, email, name }));
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSubmit();
+    }
+  };
+
+  const clearForm = () => {
+    setEmail("");
+    setPassword("");
+    setUsername("");
+    setName("");
+  };
+
+  const toggleLoginMethod = () => {
+    clearForm();
+    setUserLoginMethod(!userLoginMethod);
   };
 
   return (
@@ -44,68 +62,111 @@ const LoginComponent = () => {
         <div className={styles.cardContainer}>
           <div className={styles.cardContainerLeft}>
             <p className={styles.cardLeftHeading}>
-              {userLoginMethod ? "Sign In" : "Sign Up"}
+              {userLoginMethod ? "Welcome Back" : "Create Account"}
             </p>
-            <p style={{ color: isError ? "red" : "green" }}>{message}</p>
+            <p className={styles.cardLeftSubtitle}>
+              {userLoginMethod ? "Sign in to your account" : "Sign up to get started"}
+            </p>
 
-            <div className={styles.inputContainers}>
+            <div className={styles.message} style={{ color: isError ? "red" : "green" }}>
+              {message}
+            </div>
+
+            <form className={styles.inputContainers} onSubmit={handleSubmit}>
               {!userLoginMethod && (
                 <div className={styles.inputRow}>
                   <input
-                    onChange={(e) => setUserName(e.target.value)}
+                    onChange={(e) => setUsername(e.target.value)}
+                    onKeyPress={handleKeyPress}
                     className={styles.inputField}
                     type="text"
                     placeholder="Username"
+                    value={username}
+                    required={!userLoginMethod}
                   />
                   <input
                     onChange={(e) => setName(e.target.value)}
+                    onKeyPress={handleKeyPress}
                     className={styles.inputField}
                     type="text"
-                    placeholder="Name"
+                    placeholder="Full Name"
+                    value={name}
+                    required={!userLoginMethod}
                   />
                 </div>
               )}
 
               <input
-                onChange={(e) => SetEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
+                onKeyPress={handleKeyPress}
                 className={styles.inputField}
                 type="email"
-                placeholder="Email"
+                placeholder="Email Address"
+                value={email}
+                required
               />
               <input
-                onChange={(e) => SetPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
+                onKeyPress={handleKeyPress}
                 className={styles.inputField}
                 type="password"
                 placeholder="Password"
+                value={password}
+                required
               />
 
-              <div
-                className={styles.buttonWithOutline}
-                onClick={() => {
-                  if (userLoginMethod) {
-                    handleLogin();
-                  } else {
-                    handleRegister();
-                  }
-                }}
+              <button
+                type="submit"
+                className={`${styles.buttonWithOutline} ${isLoading ? styles.buttonLoading : ''}`}
+                onClick={handleSubmit}
+                disabled={isLoading}
               >
-                <p>{userLoginMethod ? "Sign In" : "Sign Up"}</p>
+                {isLoading ? (
+                  "Processing..."
+                ) : userLoginMethod ? (
+                  "Sign In"
+                ) : (
+                  "Create Account"
+                )}
+              </button>
+
+              {/* Mobile Toggle Section */}
+              <div className={styles.mobileToggle}>
+                <p className={styles.mobileToggleText}>
+                  {userLoginMethod
+                    ? "Don't have an account?"
+                    : "Already have an account?"}
+                </p>
+                <div
+                  className={`${styles.buttonWithOutline} ${styles.mobileToggleButton}`}
+                  onClick={toggleLoginMethod}
+                >
+                  <p>{userLoginMethod ? "Sign Up" : "Sign In"}</p>
+                </div>
               </div>
-            </div>
+            </form>
           </div>
 
+          {/* Desktop Right Section */}
           <div className={styles.cardContainerRight}>
-           <div>
-             {userLoginMethod? <p>Don't Have an Account?</p> : <p>Already Have an Account?</p>}
-            <div
-              className={styles.buttonWithOutline}
-              onClick={() => {
-                setUserLoginMethod(!userLoginMethod)
-              }}
-            >
-              <p>{userLoginMethod ? "Sign Up" : "Sign In"}</p>
+            <div className={styles.rightContent}>
+              <p>
+                {userLoginMethod
+                  ? "Don't Have an Account?"
+                  : "Already Have an Account?"}
+              </p>
+              <p style={{ fontSize: "0.95rem", opacity: 0.9 }}>
+                {userLoginMethod
+                  ? "Create an account to get started with all our features"
+                  : "Sign in to access your account and continue your journey"}
+              </p>
+              <div
+                className={styles.buttonWithOutline}
+                onClick={toggleLoginMethod}
+              >
+                <p>{userLoginMethod ? "Sign Up" : "Sign In"}</p>
+              </div>
             </div>
-           </div>
           </div>
         </div>
       </div>

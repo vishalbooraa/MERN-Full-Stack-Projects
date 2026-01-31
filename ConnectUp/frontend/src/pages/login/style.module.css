@@ -1,4 +1,4 @@
-.container{
+.container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -6,30 +6,41 @@
     background-color: snow;
 }
 
-.cardContainer{
+.cardContainer {
     height: 80vh;
     width: 80vw;
     display: flex;
     border-radius: 10px;
     overflow: hidden;
     background-color: white;
-    box-shadow: 10px 10px 15px rgb(173,173,173);
+    box-shadow: 10px 10px 15px rgb(173, 173, 173);
 }
 
 /* LEFT SIDE */
-.cardContainerLeft{
+.cardContainerLeft {
     flex: 0.6;
     padding: 2rem;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.cardLeftHeading{
+.cardLeftHeading {
     font-weight: bold;
     font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.message {
+    min-height: 24px;
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+    text-align: center;
 }
 
 /* INPUTS */
-.inputContainers{
+.inputContainers {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -37,20 +48,20 @@
     padding-top: 1.3rem;
     max-width: 400px;
     margin: 0 auto;
-    gap: 1.5rem;
+    gap: 1.2rem;
 }
 
-.inputRow{
+.inputRow {
     display: flex;
     gap: 1.2rem;
     width: 100%;
 }
 
-.inputRow > .inputField{
+.inputRow > .inputField {
     flex: 1;
 }
 
-.inputField{
+.inputField {
     padding-inline: 1.3rem;
     padding-block: 0.8rem;
     outline: none;
@@ -58,32 +69,39 @@
     border: 1px solid silver;
     width: 100%;
     font-size: 1rem;
+    transition: all 0.3s ease;
 }
 
-.inputField:focus{
+.inputField:focus {
     border-color: #00488b;
-    box-shadow: 0 0 0 2px rgba(0,72,139,0.15);
+    box-shadow: 0 0 0 2px rgba(0, 72, 139, 0.15);
 }
 
 /* BUTTON */
-.buttonWithOutline{
+.buttonWithOutline {
     padding: 0.8rem 1.3rem;
-    background-color: rgb(236,236,236);
+    background-color: rgb(236, 236, 236);
     width: 100%;
     border-radius: 10px;
     cursor: pointer;
     text-align: center;
     font-weight: 500;
     transition: all 0.3s ease;
+    border: none;
+    font-size: 1rem;
 }
 
-.buttonWithOutline:hover{
+.buttonWithOutline:hover {
     background-color: #00488b;
     color: white;
 }
 
+.buttonWithOutline:active {
+    transform: scale(0.98);
+}
+
 /* RIGHT SIDE */
-.cardContainerRight{
+.cardContainerRight {
     flex: 0.4;
     background-color: #00488b;
     display: flex;
@@ -91,34 +109,172 @@
     align-items: center;
     color: white;
     flex-direction: column;
-    gap:1.2rem
+    padding: 2rem;
 }
 
-.cardContainerRight .buttonWithOutline{
+.rightContent {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    max-width: 300px;
+}
+
+.rightContent p {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+
+.cardContainerRight .buttonWithOutline {
     background-color: white;
     color: #00488b;
     font-weight: 600;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
+    width: 200px;
 }
 
-.cardContainerRight .buttonWithOutline:hover{
+.cardContainerRight .buttonWithOutline:hover {
     background-color: #e6f0ff;
     color: #00488b;
 }
 
+/* Mobile Toggle - Hidden on Desktop */
+.mobileToggle {
+    display: none;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
+    width: 100%;
+    text-align: center;
+}
+
+.mobileToggleText {
+    color: #666;
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+}
+
+.mobileToggleButton {
+    background-color: #f5f5f5;
+    border: 1px solid #00488b;
+    color: #00488b;
+}
+
+.mobileToggleButton:hover {
+    background-color: #00488b;
+    color: white;
+}
+
+/* Loading State */
+.buttonLoading {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.buttonLoading:hover {
+    background-color: rgb(236, 236, 236);
+    color: inherit;
+}
+
 /* RESPONSIVE */
-@media (max-width: 768px) {
-    .cardContainer{
-        flex-direction: column;
-        height: auto;
+@media (max-width: 1024px) {
+    .cardContainer {
         width: 90vw;
+        height: 75vh;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+        min-height: 85vh;
+        align-items: flex-start;
+        padding-top: 2rem;
     }
 
-    .cardContainerRight{
+    .cardContainer {
+        flex-direction: column;
+        height: auto;
+        min-height: auto;
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .cardContainerLeft {
+        flex: none;
+        padding: 2rem 1.5rem 1.5rem;
+        width: 100%;
+    }
+
+    .cardLeftHeading {
+        font-size: 1.6rem;
+    }
+
+    .cardContainerRight {
         display: none;
     }
 
-    .inputRow{
+    .mobileToggle {
+        display: block;
+    }
+
+    .inputRow {
         flex-direction: column;
+        gap: 1rem;
+    }
+
+    .inputContainers {
+        gap: 1rem;
+        padding-top: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .cardContainer {
+        width: 95%;
+        border-radius: 8px;
+    }
+
+    .cardContainerLeft {
+        padding: 1.5rem 1rem 1rem;
+    }
+
+    .cardLeftHeading {
+        font-size: 1.4rem;
+    }
+
+    .inputField {
+        padding-inline: 1rem;
+        padding-block: 0.7rem;
+        font-size: 0.95rem;
+    }
+
+    .buttonWithOutline {
+        padding: 0.7rem 1rem;
+        font-size: 0.95rem;
+    }
+
+    .mobileToggle {
+        margin-top: 1.2rem;
+        padding-top: 1.2rem;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 360px) {
+    .container {
+        padding: 0.5rem;
+        padding-top: 1rem;
+    }
+
+    .cardContainerLeft {
+        padding: 1rem 0.8rem 0.8rem;
+    }
+
+    .inputContainers {
+        gap: 0.8rem;
     }
 }
