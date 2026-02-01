@@ -38,3 +38,19 @@ export const registerUser=createAsyncThunk(
         }
     }
 );
+
+export const getAboutUser=createAsyncThunk(
+    "user/getAboutUser",
+    async(user,thunkApI)=>{
+        try{
+            const response=await clientServer.get("/get_user_and_profile",{
+                params:{
+                    token:user.token
+                }
+            })
+            return thunkApI.fulfillWithValue(response.data)
+        }catch(error){
+            return thunkApI.rejectWithValue(error.response.data)
+        }
+    }
+)
