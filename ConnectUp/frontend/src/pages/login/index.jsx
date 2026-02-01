@@ -29,6 +29,12 @@ const LoginComponent = () => {
     dispatch(emptyMessage());
   }, [userLoginMethod]);
 
+  useEffect(()=>{
+    if(localStorage.getItem("token")){
+      router.push("/dashboard")
+    }
+  },[])
+
   const handleSubmit = (e) => {
     e?.preventDefault();
     if (userLoginMethod) {
