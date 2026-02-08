@@ -42,6 +42,27 @@
     transform: translateY(-1px);
 }
 
+/* USER SECTION */
+.userSection{
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.greeting{
+    font-size: 1rem;
+}
+
+.profileLink{
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.profileLink:hover{
+    text-decoration: underline;
+}
+
+
 /* RESPONSIVE */
 @media (max-width: 600px){
     .container{
