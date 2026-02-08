@@ -3,8 +3,11 @@ import styles from "./index.module.css";
 import { useRouter } from "next/router";
 import { setTokenIsNotThere, setTokenIsThere } from "@/config/redux/reducer/authReducer";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+
 
 const DashboardLayout = ({ children }) => {
+    const authState=useSelector((state)=>state.auth);
     const router =useRouter();
     const dispatch=useDispatch();
     useEffect(()=>{
@@ -52,6 +55,16 @@ const DashboardLayout = ({ children }) => {
           <div className="feedContainer">{children}</div>
           <div className="extraContainer">
             <h3>Top Profiles</h3>
+            {authState.all_profiles_fetched &&
+            authState.all_users.map((profile) => {
+                const user = profile.userId;
+
+                return (
+                    <div key={profile._id} className={styles.profileCard}>
+                        <p>{user?.name}</p>
+                    </div>
+                );
+            })}
           </div>
         </div>
       </div>

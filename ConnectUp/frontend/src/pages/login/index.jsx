@@ -36,13 +36,16 @@ const LoginComponent = () => {
   },[])
 
   const handleSubmit = (e) => {
-    e?.preventDefault();
-    if (userLoginMethod) {
-      dispatch(loginUser({ email, password }));
-    } else {
-      dispatch(registerUser({ username, password, email, name }));
-    }
-  };
+  e?.preventDefault();
+  dispatch(emptyMessage());
+
+  if (userLoginMethod) {
+    dispatch(loginUser({ email, password }));
+  } else {
+    dispatch(registerUser({ username, password, email, name }));
+  }
+};
+
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
