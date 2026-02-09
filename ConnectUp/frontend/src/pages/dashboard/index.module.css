@@ -1,0 +1,300 @@
+/* =========================
+   Scroll Container
+========================= */
+.scrollComponent {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding-top: 1rem;
+}
+
+/* =========================
+   Create Post Card
+========================= */
+.createPostContainer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 70%;
+  min-height: 80px;
+  padding: 0.8rem 1rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================
+   Profile Image
+========================= */
+.userProfile {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* =========================
+   Textarea
+========================= */
+.createPostContainer textarea {
+  flex: 1;
+  height: 45px;
+  resize: none;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  padding: 0.6rem 1rem;
+  font-size: 0.95rem;
+  outline: none;
+  background-color: #f5f5f5;
+}
+
+.createPostContainer textarea:focus {
+  border-color: #0a66c2;
+  background-color: #fff;
+}
+
+/* =========================
+   Floating Action Button
+========================= */
+.fab {
+  width: 42px;
+  height: 42px;
+  background-color: #0a66c2;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+  flex-shrink: 0;
+  color: #fff;
+  font-size: 20px;
+}
+
+.fab:hover {
+  background-color: #004182;
+  transform: scale(1.05);
+}
+
+.uploadBtn {
+  padding: 0.45rem 1.2rem;
+  border-radius: 20px;
+  border: none;
+  background-color: #0a66c2;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+  flex-shrink: 0;
+}
+
+.uploadBtn:hover {
+  background-color: #004182;
+  transform: scale(1.03);
+}
+
+/* =========================
+   Posts Container
+========================= */
+.postsContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1.5rem;
+  gap: 1.2rem;
+}
+
+/* =========================
+   Single Post Card
+========================= */
+.postCard {
+  width: 70%;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+/* =========================
+   Post Header
+========================= */
+.postHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* User Info */
+.postUserInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.postUserImage {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.postHeader h4 {
+  font-size: 0.95rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+.postHeader span {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+/* =========================
+   Delete Button
+========================= */
+.deleteBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.deleteBtn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.deleteBtn:hover {
+  background-color: #ffe5e5;
+  color: #d11a2a;
+}
+
+/* =========================
+   Post Body Text
+========================= */
+.postBody {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #333;
+  word-wrap: break-word;
+}
+
+/* =========================
+   Post Image
+========================= */
+.postImage {
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: 10px;
+  background-color: #f0f0f0;
+}
+
+/* =========================
+   Tablet (≤ 1024px)
+========================= */
+@media (max-width: 1024px) {
+  .createPostContainer {
+    width: 85%;
+  }
+
+  .postCard {
+    width: 85%;
+  }
+}
+
+/* =========================
+   Mobile (≤ 768px)
+========================= */
+@media (max-width: 768px) {
+  .createPostContainer {
+    width: 95%;
+    gap: 0.7rem;
+    padding: 0.7rem;
+  }
+
+  .userProfile {
+    width: 40px;
+    height: 40px;
+  }
+
+  .createPostContainer textarea {
+    height: 40px;
+    font-size: 0.9rem;
+  }
+
+  .fab {
+    width: 38px;
+    height: 38px;
+    font-size: 18px;
+  }
+
+  .uploadBtn {
+    padding: 0.35rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .postCard {
+    width: 95%;
+    padding: 0.8rem;
+  }
+
+  .postUserImage {
+    width: 38px;
+    height: 38px;
+  }
+
+  .postBody {
+    font-size: 0.9rem;
+  }
+
+  .postImage {
+    max-height: 300px;
+  }
+}
+
+/* =========================
+   Small Mobile (≤ 480px)
+========================= */
+@media (max-width: 480px) {
+  .createPostContainer {
+    width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .uploadBtn {
+    display: none;
+  }
+
+  .postCard {
+    width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .postImage {
+    border-radius: 6px;
+    max-height: 260px;
+  }
+
+  .deleteBtn svg {
+    width: 18px;
+    height: 18px;
+  }
+}
