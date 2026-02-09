@@ -38,3 +38,22 @@ export const createPost = createAsyncThunk(
     }
   }
 );
+
+export const deletePost = createAsyncThunk(
+  "post/deletePost",
+  async ({postId}, thunkApi) => {
+    try {
+      const response = await clientServer.delete("/delete_post", {
+        data: {
+          postId: postId,
+          token: localStorage.getItem("token")
+        }
+      });
+      return postId;
+    } catch (error) {
+      return thunkApi.rejectWithValue(
+        error.response?.data || "Failed to delete post"
+      );
+    }
+  }
+);

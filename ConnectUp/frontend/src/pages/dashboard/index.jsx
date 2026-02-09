@@ -1,5 +1,5 @@
 import { getAboutUser, getAllUsers } from "@/config/redux/action/authAction";
-import { createPost, getAllPosts } from "@/config/redux/action/postAction";
+import { createPost, deletePost, getAllPosts } from "@/config/redux/action/postAction";
 import DashboardLayout from "@/layout/DashboardLayout";
 import UserLayout from "@/layout/UserLayout";
 import React, { useEffect, useState } from "react";
@@ -134,7 +134,10 @@ const Dashboard = () => {
 
                   {/* Delete Icon (UI only) */}
                   {post.userId._id === authState.user.userId._id && (
-                    <button className={styles.deleteBtn} title="Delete post">
+                    <button onClick={async () => {
+                        await dispatch(deletePost({ postId: post._id }));
+                        await dispatch(getAllPosts());
+                    }} className={styles.deleteBtn} title="Delete post">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
