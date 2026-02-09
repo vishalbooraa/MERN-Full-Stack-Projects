@@ -1,11 +1,13 @@
 import React from 'react';
 import styles from './styles.module.css';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { reset } from '@/config/redux/reducer/authReducer';
 
 const NavBarComponent = () => {
     const router = useRouter();
     const authState = useSelector((state) => state.auth);
+    const dispatch=useDispatch();
 
     return (
         <div className={styles.container}>
@@ -28,6 +30,16 @@ const NavBarComponent = () => {
                                 onClick={() => router.push("/profile")}
                             >
                                 Profile
+                            </p>
+                            <p
+                                className={styles.profileLink}
+                                onClick={()=>{
+                                    localStorage.removeItem("token")
+                                    router.push("/login")
+                                    dispatch(reset())
+                                }}
+                            >
+                                Logout
                             </p>
                         </div>
                     ) : (
