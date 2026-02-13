@@ -1,9 +1,12 @@
 import { getAboutUser, getAllUsers } from "@/config/redux/action/authAction";
 import {
   createPost,
+  deleteComment,
   deletePost,
+  getAllComments,
   getAllPosts,
   incrementLike,
+  postComment,
 } from "@/config/redux/action/postAction";
 import DashboardLayout from "@/layout/DashboardLayout";
 import UserLayout from "@/layout/UserLayout";
@@ -11,6 +14,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./index.module.css";
 import { BASE_URL } from "@/config";
+import { resetPostId } from "@/config/redux/reducer/postReducer";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -22,6 +26,7 @@ const Dashboard = () => {
 
   const [postContent, setPostContent] = useState("");
   const [postImage, setPostImage] = useState(null);
+  const [commentText, setCommentText] = useState("");
 
   /* ================= Fetch Data ================= */
   useEffect(() => {
@@ -189,7 +194,9 @@ const Dashboard = () => {
                   </button>
 
                   {/* COMMENT */}
-                  <button className={styles.actionBtn}>
+                  <button onClick={async()=>{
+                    await dispatch(getAllComments({ postId: post._id }))
+                  }} className={styles.actionBtn}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z" />
                     </svg>
@@ -214,6 +221,113 @@ const Dashboard = () => {
             <p style={{ textAlign: "center" }}>No posts yet</p>
           )}
         </div>
+        {postState.postId !== "" && (
+  <div
+    className={styles.commentsContainer}
+    onClick={() => {
+      dispatch(resetPostId());
+    }}
+  >
+    <div
+      className={styles.allCommentsContainer}
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* ================= HEADER ================= */}
+      <h2>Comments</h2>
+
+      {/* ================= COMMENTS LIST ================= */}
+      <div className={styles.commentsList}>
+        {postState.comments.length === 0 && (
+          <p style={{ textAlign: "center" }}>No comments yet</p>
+        )}
+
+        {postState.comments.map((comment) => (
+          <div key={comment._id} className={styles.commentCard}>
+            <div className={styles.commentHeader}>
+              <div className={styles.commentUserInfo}>
+                <img
+                  src={
+                    comment.userId?.profilePicture
+                      ? getMediaUrl(comment.userId.profilePicture)
+                      : `${BASE_URL}/default.jpg`
+                  }
+                  alt="User"
+                  className={styles.commentUserImage}
+                />
+                <div>
+                  <h5>{comment.userId?.name}</h5>
+                  <span>@{comment.userId?.username}</span>
+                </div>
+              </div>
+
+              {/* ================= DELETE COMMENT ================= */}
+              {comment.userId._id === authState.user.userId._id && (
+                <button
+                  className={styles.deleteBtn}
+                  onClick={async () => {
+                    await dispatch(
+                      deleteComment({ commentId: comment._id })
+                    );
+                    await dispatch(
+                      getAllComments({ postId: postState.postId })
+                    );
+                  }}
+                >
+                  {/* SAME DELETE SVG AS POST */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                    />
+                  </svg>
+                </button>
+              )}
+            </div>
+
+            <p className={styles.commentBody}>{comment.body}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* ================= CREATE COMMENT ================= */}
+      <div className={styles.createCommentContainer}>
+        <input
+          type="text"
+          value={commentText}
+          onChange={(e) => setCommentText(e.target.value)}
+          placeholder="Write a comment..."
+        />
+        <button
+          onClick={async () => {
+            if (!commentText.trim()) return;
+
+            await dispatch(
+              postComment({
+                postId: postState.postId,
+                body: commentText,
+              })
+            );
+
+            setCommentText("");
+            await dispatch(
+              getAllComments({ postId: postState.postId })
+            );
+          }}
+        >
+          Comment
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
       </DashboardLayout>
     </UserLayout>
   );

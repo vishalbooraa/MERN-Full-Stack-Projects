@@ -22,7 +22,7 @@ router.route("/get_all_posts").get(getAllPosts);
 router.route("/delete_post").delete(deletePost);
 router.route("/comment_post").post(commentPost);
 router.route("/get_comments").get(getComments);
-router.route("delete_comment").delete(deleteComment);
+router.route("/delete_comment").delete(deleteComment);
 router.route("/increment_post_likes").post(increaseLikes);
 
 

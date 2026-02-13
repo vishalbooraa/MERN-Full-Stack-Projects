@@ -128,7 +128,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
 }
 
 /* User Info */
@@ -183,13 +182,12 @@
 }
 
 /* =========================
-   Post Body Text
+   Post Body
 ========================= */
 .postBody {
   font-size: 0.95rem;
   line-height: 1.5;
   color: #333;
-  word-wrap: break-word;
 }
 
 /* =========================
@@ -200,18 +198,15 @@
   max-height: 420px;
   object-fit: cover;
   border-radius: 10px;
-  background-color: #f0f0f0;
 }
 
 /* =========================
-   Post Actions (Like / Comment / Share)
+   Post Actions
 ========================= */
 .postActions {
   display: flex;
   justify-content: space-around;
-  align-items: center;
   padding-top: 0.6rem;
-  margin-top: 0.4rem;
   border-top: 1px solid #e6e6e6;
 }
 
@@ -228,9 +223,11 @@
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
+/* 🔥 FIX: SVG icons visible */
 .actionBtn svg {
   width: 20px;
   height: 20px;
+  stroke-width: 1.5;
 }
 
 .actionBtn:hover {
@@ -238,70 +235,132 @@
   color: #0a66c2;
 }
 
-
 /* =========================
-   Tablet (≤ 1024px)
+   Comments Modal
 ========================= */
-@media (max-width: 1024px) {
-  .createPostContainer {
-    width: 85%;
-  }
+.commentsContainer {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
 
-  .postCard {
-    width: 85%;
-  }
+.allCommentsContainer {
+  width: 40vw;
+  height: 80vh;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 1.4rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 /* =========================
-   Mobile (≤ 768px)
+   Comments List
 ========================= */
+.commentsList {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 4rem;
+}
+
+.commentCard {
+  padding: 0.7rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.commentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.commentUserInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.commentUserImage {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.commentUserInfo h5 {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.commentUserInfo span {
+  font-size: 0.75rem;
+  color: #777;
+}
+
+.commentBody {
+  margin-left: 44px;
+  margin-top: 4px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* =========================
+   Create Comment
+========================= */
+.createCommentContainer {
+  display: flex;
+  gap: 0.8rem;
+  position: absolute;
+  bottom: 1.4rem;
+  left: 1.4rem;
+  right: 1.4rem;
+}
+
+.createCommentContainer input {
+  flex: 1;
+  padding: 0.5rem 0.9rem;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+.createCommentContainer button {
+  padding: 0.45rem 1.1rem;
+  border-radius: 20px;
+  border: none;
+  background-color: #0a66c2;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* =========================
+   Responsive
+========================= */
+@media (max-width: 1024px) {
+  .createPostContainer,
+  .postCard {
+    width: 85%;
+  }
+
+  .allCommentsContainer {
+    width: 85vw;
+  }
+}
+
 @media (max-width: 768px) {
-  .createPostContainer {
-    width: 95%;
-    gap: 0.7rem;
-    padding: 0.7rem;
-  }
-
-  .userProfile {
-    width: 40px;
-    height: 40px;
-  }
-
-  .createPostContainer textarea {
-    height: 40px;
-    font-size: 0.9rem;
-  }
-
-  .fab {
-    width: 38px;
-    height: 38px;
-    font-size: 18px;
-  }
-
-  .uploadBtn {
-    padding: 0.35rem 1rem;
-    font-size: 0.85rem;
-  }
-
+  .createPostContainer,
   .postCard {
     width: 95%;
-    padding: 0.8rem;
   }
 
-  .postUserImage {
-    width: 38px;
-    height: 38px;
-  }
-
-  .postBody {
-    font-size: 0.9rem;
-  }
-
-  .postImage {
-    max-height: 300px;
-  }
-  .actionBtn {
-    padding: 6px;
+  .allCommentsContainer {
+    width: 90vw;
+    height: 85vh;
   }
 
   .actionBtn svg {
@@ -310,35 +369,11 @@
   }
 }
 
-/* =========================
-   Small Mobile (≤ 480px)
-========================= */
 @media (max-width: 480px) {
-  .createPostContainer {
-    width: 100%;
-    border-radius: 0;
-    box-shadow: none;
-    border-bottom: 1px solid #e0e0e0;
-  }
-
-  .uploadBtn {
-    display: none;
-  }
-
+  .createPostContainer,
   .postCard {
     width: 100%;
     border-radius: 0;
     box-shadow: none;
-    border-bottom: 1px solid #e0e0e0;
-  }
-
-  .postImage {
-    border-radius: 6px;
-    max-height: 260px;
-  }
-
-  .deleteBtn svg {
-    width: 18px;
-    height: 18px;
   }
 }

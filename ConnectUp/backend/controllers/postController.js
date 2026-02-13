@@ -74,7 +74,7 @@ export const commentPost=async(req,res)=>{
         const comment=new CommentModel({
             userId:user._id,
             postId:postId,
-            comment:commentBody,
+            body:commentBody,
         });
         await comment.save();
         return res.status(200).json({message:"Comment added successfully"});
@@ -85,7 +85,7 @@ export const commentPost=async(req,res)=>{
 
 export const getComments=async(req,res)=>{
     try{
-        const {postId}=req.body;
+        const {postId}=req.query;
         const post=await PostModel.findById(postId);
         if(!post){
             return res.status(404).json({message:"Post not found"});

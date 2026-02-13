@@ -73,3 +73,55 @@ export const incrementLike = createAsyncThunk(
     } 
   }
 );
+
+export const getAllComments = createAsyncThunk(
+  "post/getAllComments",
+  async ({postId}, thunkApi) => {
+    try {
+      const response = await clientServer.get("/get_comments", {
+        params: {
+          postId: postId,
+        }
+      });
+      return {postId,comments: response.data.comments};
+    } catch (error) {
+      return thunkApi.rejectWithValue(
+        error.response?.data || "Failed to fetch comments"
+      );
+    }
+  }
+);
+
+export const postComment = createAsyncThunk(
+  "post/postComment",
+  async ({postId,body}, thunkApi) => {
+    try {
+      const response = await clientServer.post("/comment_post", {
+        postId: postId,
+        commentBody: body,  
+        token: localStorage.getItem("token")
+      });
+      return response.data.message;
+    } catch (error) {
+      return thunkApi.rejectWithValue(
+        error.response?.data || "Failed to post comment"
+      );
+    } 
+  }
+);
+
+export const deleteComment = createAsyncThunk(
+  "post/deleteComment",
+  async ({commentId}, thunkApi) => {
+    try {
+      const response = await clientServer.delete("/delete_comment", {
+        data: { commentId: commentId, token: localStorage.getItem("token") }
+      });
+      return response.data.message;
+    } catch (error) {
+      return thunkApi.rejectWithValue(
+        error.response?.data || "Failed to delete comment"
+      );
+    }
+  }
+);
