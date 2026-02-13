@@ -204,6 +204,42 @@
 }
 
 /* =========================
+   Post Actions (Like / Comment / Share)
+========================= */
+.postActions {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 0.6rem;
+  margin-top: 0.4rem;
+  border-top: 1px solid #e6e6e6;
+}
+
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.actionBtn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.actionBtn:hover {
+  background-color: #f0f2f5;
+  color: #0a66c2;
+}
+
+
+/* =========================
    Tablet (≤ 1024px)
 ========================= */
 @media (max-width: 1024px) {
@@ -263,6 +299,14 @@
 
   .postImage {
     max-height: 300px;
+  }
+  .actionBtn {
+    padding: 6px;
+  }
+
+  .actionBtn svg {
+    width: 18px;
+    height: 18px;
   }
 }
 
