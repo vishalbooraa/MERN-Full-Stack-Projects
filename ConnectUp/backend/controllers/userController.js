@@ -282,3 +282,18 @@ export const respondToConnectionRequest=async(req,res)=>{
         return res.status(500).json({message:error.message});
     }
 }
+
+export const getUserProfileAndUserBasedOnUsername=async(req,res)=>{
+    try{
+        const {username}=req.query;
+        const user=await UserModel.findOne({username:username});
+        if(!user){
+            return res.status(404).json({message:"User not found"});
+        }
+        const profile=await ProfileModel.findOne({userId:user._id})
+        .populate("userId","name email username profilePicture");
+        return res.status(200).json({user:profile});
+    }catch(error){
+        return res.status(500).json({message:error.message});
+    }
+}

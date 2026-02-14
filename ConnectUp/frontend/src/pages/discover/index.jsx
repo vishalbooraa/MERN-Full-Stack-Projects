@@ -5,10 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers, getAboutUser } from "@/config/redux/action/authAction";
 import { BASE_URL } from "@/config";
 import styles from "./index.module.css";
+import { useRouter } from "next/router";
 
 const DiscoverPage = () => {
   const authState = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -47,7 +49,9 @@ const DiscoverPage = () => {
                   profile.userId._id !== authState.user?.userId?._id // exclude current user
               )
               .map((profile) => (
-                <div key={profile._id} className={styles.profileCard}>
+                <div onClick={()=>{
+                    router.push(`/view_profile/${profile.userId?.username || "unknown"}`);
+                }} key={profile._id} className={styles.profileCard}>
                   <img
                     src={getProfilePicture(profile.userId?.profilePicture)}
                     alt={profile.userId?.name || "User"}
