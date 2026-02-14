@@ -14,6 +14,7 @@ import {
   postComment,
 } from "@/config/redux/action/postAction";
 import { resetPostId } from "@/config/redux/reducer/postReducer";
+import { getConnectionRequests, sendConnectionRequest } from "@/config/redux/action/authAction";
 
 const getProfilePicture = (path) => {
   if (!path) return `${BASE_URL}/default.jpg`;
@@ -26,7 +27,7 @@ const getMediaUrl = (path) => {
   return `${BASE_URL}/${cleanPath}`;
 };
 
-const ViewProfilePage = ({ profileData, error }) => {
+const ViewProfilePage = ({ profileData, error, onDownloadResume }) => {
   const { userId, bio, education, pastworK } = profileData || {};
   const router = useRouter();
   const postState = useSelector((state) => state.posts);
@@ -37,6 +38,7 @@ const ViewProfilePage = ({ profileData, error }) => {
   const [profilePosts, setProfilePosts] = useState([]);
   const [commentText, setCommentText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isConnectionNull,setIsConnectionNull]=useState(false);
 
   // Fetch posts on page load
   useEffect(() => {
@@ -47,6 +49,7 @@ const ViewProfilePage = ({ profileData, error }) => {
     if (authState.isTokenThere) {
       setIsLoading(true);
       dispatch(getAllPosts());
+      dispatch(getConnectionRequests());
       setIsLoading(false);
     }
   }, [authState.isTokenThere, dispatch]);
@@ -61,12 +64,17 @@ const ViewProfilePage = ({ profileData, error }) => {
     }
   }, [postState.posts, profileData?.userId?._id]);
 
-  // Check if current user is in connections
+  // Check if current user is in connections and whether it's pending
   useEffect(() => {
-    if (authState.connections?.includes(profileData?.userId?._id)) {
-      setIsCurrentUserInConnections(true);
-    }
+    const req = authState.connections?.find(
+      (r) => r.connectionId?._id === profileData?.userId?._id
+    );
+
+    const isRequestSent = !!req;
+    setIsCurrentUserInConnections(isRequestSent);
+    setIsConnectionNull(req ? req.status_accepted === null : false);
   }, [authState.connections, profileData?.userId?._id]);
+
 
   // Error handling
   if (error) {
@@ -135,16 +143,31 @@ const ViewProfilePage = ({ profileData, error }) => {
             <div className={styles.profileActions}>
               {isCurrentUserInConnections ? (
                 <button className={styles.connectedButton} disabled>
-                  ✓ Connected
+                  {isConnectionNull ? "Pending" : "Connected"}
                 </button>
               ) : (
                 <button
                   className={styles.connectButton}
-                  onClick={() => router.push(`/connect/${profileData.userId._id}`)}
+                  onClick={ async() =>{
+                    setIsConnectionNull(true);
+                    await dispatch(sendConnectionRequest({ _id: profileData.userId._id }));
+                    await dispatch(getConnectionRequests());
+                    }}
                 >
                   + Connect
                 </button>
               )}
+              {/* Download Resume button - calls prop handler if provided, else opens resume URL if present */}
+              <button
+                className={styles.downloadButton}
+                onClick={async() => {
+                  const response= await clientServer.get(`/download_user_resume?id=${profileData.userId._id}`);
+                  window.open(`${BASE_URL}/${response.data.message}`, "_blank");
+                }}
+                title="Download Resume"
+              >
+                Download Resume
+              </button>
             </div>
           </div>
 

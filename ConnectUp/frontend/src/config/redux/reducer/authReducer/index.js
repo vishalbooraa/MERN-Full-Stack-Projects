@@ -1,7 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   getAboutUser,
   getAllUsers,
+  getConnectionRequests,
+  getReceivedConnectionRequests,
   loginUser,
   registerUser,
 } from "@/config/redux/action/authAction";
@@ -44,8 +46,8 @@ const authSlice = createSlice({
       // ================= LOGIN =================
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
-        state.isError = false;      // ✅ FIX
-        state.isSuccess = false;    // ✅ FIX
+        state.isError = false; // ✅ FIX
+        state.isSuccess = false; // ✅ FIX
         state.message = "Loading...";
       })
       .addCase(loginUser.fulfilled, (state) => {
@@ -65,8 +67,8 @@ const authSlice = createSlice({
       // ================= REGISTER =================
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
-        state.isError = false;      // ✅ FIX (MAIN BUG)
-        state.isSuccess = false;    // ✅ FIX
+        state.isError = false; // ✅ FIX (MAIN BUG)
+        state.isSuccess = false; // ✅ FIX
         state.message = "Loading...";
       })
       .addCase(registerUser.fulfilled, (state) => {
@@ -106,15 +108,33 @@ const authSlice = createSlice({
         state.isError = true;
         state.all_profiles_fetched = false;
         state.message = action.payload?.message || "Failed to fetch users";
+      })
+      .addCase(getConnectionRequests.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.connections = action.payload.requests || [];
+      })
+      .addCase(getConnectionRequests.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message =
+          action.payload?.message || "Failed to fetch connections";
+      })
+      .addCase(getReceivedConnectionRequests.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.connectionRequests = action.payload.requests || [];
+      })
+      .addCase(getReceivedConnectionRequests.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message =
+          action.payload?.message || "Failed to fetch connection requests";
       });
   },
 });
 
-export const {
-  reset,
-  emptyMessage,
-  setTokenIsThere,
-  setTokenIsNotThere,
-} = authSlice.actions;
+export const { reset, emptyMessage, setTokenIsThere, setTokenIsNotThere } =
+  authSlice.actions;
 
 export default authSlice.reducer;

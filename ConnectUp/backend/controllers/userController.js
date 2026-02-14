@@ -227,7 +227,7 @@ export const sendConnectionRequest=async(req,res)=>{
 
 export const sentConnectionsRequests=async(req,res)=>{
     try{
-        const {token}=req.body;
+        const {token}=req.query;
         const user=await UserModel.findOne({token:token});
         if(!user){
             return res.status(401).json({message:"Unauthorized"});

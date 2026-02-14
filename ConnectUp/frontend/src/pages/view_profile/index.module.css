@@ -165,6 +165,31 @@
   background-color: #10b981;
 }
 
+/* Download Resume Button */
+.downloadButton {
+  padding: 0.6rem 1.2rem;
+  background-color: #ffffff;
+  color: #0a66c2;
+  border: 1px solid #0a66c2;
+  border-radius: 24px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.12s ease, box-shadow 0.15s ease;
+  box-shadow: 0 2px 6px rgba(10, 102, 194, 0.06);
+}
+
+.downloadButton:hover {
+  background-color: #0a66c2;
+  color: #ffffff;
+  transform: scale(1.03);
+  box-shadow: 0 6px 16px rgba(10, 102, 194, 0.18);
+}
+
+.downloadButton:active {
+  transform: scale(0.98);
+}
+
 /* Sections */
 .section {
   margin-top: 24px;
@@ -497,7 +522,8 @@
   }
 
   .connectButton,
-  .connectedButton {
+  .connectedButton,
+  .downloadButton {
     flex: 1;
     max-width: 200px;
   }
