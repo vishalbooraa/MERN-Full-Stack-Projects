@@ -3,7 +3,7 @@ import DashboardLayout from '@/layout/DashboardLayout';
 import UserLayout from '@/layout/UserLayout';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAboutUser, getReceivedConnectionRequests, respondToConnectionRequest } from '@/config/redux/action/authAction';
+import { getAboutUser, getAllUsers, getReceivedConnectionRequests, respondToConnectionRequest } from '@/config/redux/action/authAction';
 import { BASE_URL } from '@/config';
 import styles from './index.module.css';
 import { useRouter } from 'next/router';
@@ -17,6 +17,9 @@ const MyConnectionsPage = () => {
     useEffect(() => {
         dispatch(getReceivedConnectionRequests());
         dispatch(getAboutUser({token: localStorage.getItem("token")}));
+        if (!authState.all_profiles_fetched) {
+              dispatch(getAllUsers());
+            }
     }, [dispatch]);
 
     const handleAccept = async (requestId) => {

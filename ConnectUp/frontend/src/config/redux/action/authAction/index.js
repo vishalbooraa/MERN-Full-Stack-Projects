@@ -126,3 +126,18 @@ export const respondToConnectionRequest = createAsyncThunk(
     }
   },
 );
+
+export const updateProfileData = createAsyncThunk(
+  "auth/updateProfileData",
+  async (profileData, thunkAPI) => {
+    try {
+      const response = await clientServer.post("/update_profile_data", {
+        token: localStorage.getItem("token"),
+        ...profileData,
+      });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data || "Failed to update profile");
+    }
+  }
+);

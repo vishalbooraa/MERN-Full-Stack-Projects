@@ -80,6 +80,15 @@
   flex: 1;
 }
 
+.profileLeftSection,
+.profileInfo {
+  min-width: 0; /* allow flex children to shrink and prevent overflow */
+}
+
+.profileInfo h2 {
+  word-break: break-word;
+}
+
 /* Profile image */
 .profileImage {
   width: 100px;
@@ -124,6 +133,28 @@
   display: flex;
   gap: 1rem;
   flex-shrink: 0;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  max-width: 420px; /* limit width so buttons stay inside the card */
+}
+
+.profileActions > div {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Ensure action buttons wrap and don't push outside container */
+.profileActions button,
+.profileActions .downloadButton {
+  white-space: nowrap;
+}
+
+@media (min-width: 1200px) {
+  .profileActions {
+    max-width: 520px;
+  }
 }
 
 .downloadButton {
@@ -427,6 +458,14 @@
     width: 100%;
     justify-content: center;
   }
+  
+  .profileActions > div {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 
   .downloadButton {
     flex: 1;
@@ -484,4 +523,116 @@
     border-radius: 0;
     box-shadow: none;
   }
+
+  .acceptBtn,
+  .rejectBtn,
+  .connectButton,
+  .downloadButton {
+    flex: 1 1 45%;
+    max-width: 45%;
+  }
+}
+
+/* Edit badge and label */
+.profileImageLabel {
+  position: relative;
+  display: inline-block;
+}
+
+.editBadge {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.editSection {
+  margin-top: 16px;
+  padding: 12px;
+  border: 1px solid #eef2ff;
+  border-radius: 8px;
+  background: #fbfdff;
+}
+
+.formRow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+/* allow inputs and child flex items to shrink to prevent overflow */
+.formRow {
+  min-width: 0;
+}
+
+.arrayItemRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.arrayItemRow input {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  flex: 1;
+}
+
+/* Make row items wrap on smaller widths and keep inputs reasonable */
+.arrayItemRow {
+  flex-wrap: wrap;
+}
+
+.arrayItemRow input {
+  flex: 1 1 160px;
+  min-width: 120px;
+}
+
+.arrayItemRow button {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  margin-left: 6px;
+}
+
+.formRow input,
+.formRow textarea {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+}
+
+.acceptBtn {
+  padding: 8px 14px;
+  background: #10b981;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.rejectBtn {
+  padding: 8px 14px;
+  background: #ef4444;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.connectButton {
+  padding: 8px 14px;
+  background: #0a66c2;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
 }

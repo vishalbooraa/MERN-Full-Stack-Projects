@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import UserLayout from "@/layout/UserLayout";
 import DashboardLayout from "@/layout/DashboardLayout";
 import { clientServer, BASE_URL } from "@/config";
@@ -14,7 +14,7 @@ import {
     postComment,
 } from "@/config/redux/action/postAction";
 import { resetPostId } from "@/config/redux/reducer/postReducer";
-import { getConnectionRequests, sendConnectionRequest } from "@/config/redux/action/authAction";
+import { getConnectionRequests, getAboutUser, updateProfileData } from "@/config/redux/action/authAction";
 
 const getProfilePicture = (path) => {
     if (!path) return `${BASE_URL}/default.jpg`;
@@ -41,6 +41,24 @@ const ProfilePage = () => {
     const [commentText, setCommentText] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [isConnectionNull, setIsConnectionNull] = useState(false);
+    const fileInputRef = useRef(null);
+    const [previewImage, setPreviewImage] = useState(null);
+    const [uploading, setUploading] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [formData, setFormData] = useState({ name: "", username: "", email: "", bio: "", currentPost: "", pastworK: [], education: [] });
+
+    useEffect(() => {
+        setPreviewImage(getProfilePicture(userId?.profilePicture));
+        setFormData({
+            name: userId?.name || "",
+            username: userId?.username || "",
+            email: userId?.email || "",
+            bio: profileData?.bio || "",
+            currentPost: profileData?.currentPost || "",
+            pastworK: profileData?.pastworK || [],
+            education: profileData?.education || [],
+        });
+    }, [userId?.profilePicture, userId?.name, userId?.username, userId?.email, profileData?.bio]);
 
     useEffect(() => {
         if (typeof window === "undefined") return;
@@ -52,6 +70,10 @@ const ProfilePage = () => {
             dispatch(getAllPosts());
             dispatch(getConnectionRequests());
             setIsLoading(false);
+            dispatch(getAboutUser({ token }));
+            if (!authState.all_profiles_fetched) {
+                    dispatch(getAllUsers());
+                }
         }
     }, [authState.isTokenThere, dispatch]);
 
@@ -101,10 +123,41 @@ const ProfilePage = () => {
                 <div className={styles.profileWrapper}>
                     <div className={styles.profileHeader}>
                         <div className={styles.profileLeftSection}>
-                            <img
-                                src={getProfilePicture(userId?.profilePicture)}
-                                alt={userId?.name || "User"}
-                                className={styles.profileImage}
+                            <label htmlFor="profilePicInput" className={styles.profileImageLabel}>
+                                <img
+                                    src={previewImage || getProfilePicture(userId?.profilePicture)}
+                                    alt={userId?.name || "User"}
+                                    className={styles.profileImage}
+                                />
+                                <span className={styles.editBadge}>{uploading ? 'Uploading...' : 'Edit'}</span>
+                            </label>
+                            <input
+                                id="profilePicInput"
+                                type="file"
+                                accept="image/*"
+                                ref={fileInputRef}
+                                style={{ display: 'none' }}
+                                onChange={async (e) => {
+                                    const file = e.target.files && e.target.files[0];
+                                    if (!file) return;
+                                    try {
+                                        setUploading(true);
+                                        setPreviewImage(URL.createObjectURL(file));
+                                        const fd = new FormData();
+                                        fd.append('token', localStorage.getItem('token'));
+                                        fd.append('profile_picture', file);
+                                        await clientServer.post('/update_profile_picture', fd, {
+                                            headers: { 'Content-Type': 'multipart/form-data' }
+                                        });
+                                        await dispatch(getAboutUser({ token: localStorage.getItem('token') }));
+                                    } catch (err) {
+                                        console.error('Upload failed', err);
+                                        setPreviewImage(getProfilePicture(userId?.profilePicture));
+                                    } finally {
+                                        setUploading(false);
+                                        e.target.value = '';
+                                    }
+                                }}
                             />
 
                             <div className={styles.profileInfo}>
@@ -115,18 +168,125 @@ const ProfilePage = () => {
                         </div>
 
                         <div className={styles.profileActions}>
-                            <button
-                                className={styles.downloadButton}
-                                onClick={async () => {
-                                    const response = await clientServer.get(`/download_user_resume?id=${profileData.userId._id}`);
-                                    window.open(`${BASE_URL}/${response.data.message}`, "_blank");
-                                }}
-                                title="Download Resume"
-                            >
-                                Download Resume
-                            </button>
+                            <div>
+                                <button
+                                    className={styles.downloadButton}
+                                    onClick={async () => {
+                                        const response = await clientServer.get(`/download_user_resume?id=${profileData.userId._id}`);
+                                        window.open(`${BASE_URL}/${response.data.message}`, "_blank");
+                                    }}
+                                    title="Download Resume"
+                                >
+                                    Download Resume
+                                </button>
+                            </div>
+                            <div>
+                                {!isEditing ? (
+                                    <button className={styles.connectButton} onClick={() => setIsEditing(true)}>Edit Profile</button>
+                                ) : (
+                                    <>
+                                        <button className={styles.acceptBtn} onClick={async () => {
+                                            try {
+                                                await dispatch(updateProfileData(formData));
+                                                await dispatch(getAboutUser({ token: localStorage.getItem('token') }));
+                                                setIsEditing(false);
+                                            } catch (err) {
+                                                console.error('Update failed', err);
+                                            }
+                                        }}>Save</button>
+                                        <button className={styles.rejectBtn} onClick={() => {
+                                            setFormData({
+                                                name: userId?.name || "",
+                                                username: userId?.username || "",
+                                                email: userId?.email || "",
+                                                bio: profileData?.bio || "",
+                                                currentPost: profileData?.currentPost || "",
+                                                pastworK: profileData?.pastworK || [],
+                                                education: profileData?.education || [],
+                                            });
+                                            setIsEditing(false);
+                                        }}>Cancel</button>
+                                    </>
+                                )}
+                            </div>
                         </div>
                     </div>
+
+                    {isEditing && (
+                        <section className={styles.editSection}>
+                            <h3>Edit Profile</h3>
+                            <div className={styles.formRow}>
+                                <label>Name</label>
+                                <input value={formData.name} onChange={(e) => setFormData(prev => ({...prev, name: e.target.value}))} />
+                            </div>
+                            <div className={styles.formRow}>
+                                <label>Username</label>
+                                <input value={formData.username} onChange={(e) => setFormData(prev => ({...prev, username: e.target.value}))} />
+                            </div>
+                            <div className={styles.formRow}>
+                                <label>Email</label>
+                                <input value={formData.email} onChange={(e) => setFormData(prev => ({...prev, email: e.target.value}))} />
+                            </div>
+                            <div className={styles.formRow}>
+                                <label>Bio</label>
+                                <textarea value={formData.bio} onChange={(e) => setFormData(prev => ({...prev, bio: e.target.value}))} />
+                            </div>
+                            <div className={styles.formRow}>
+                                <label>Current Position</label>
+                                <input value={formData.currentPost} onChange={(e) => setFormData(prev => ({...prev, currentPost: e.target.value}))} placeholder="e.g. Senior MERN Developer" />
+                            </div>
+
+                            <div className={styles.formRow}>
+                                <label>Experience</label>
+                                {formData.pastworK && formData.pastworK.map((work, idx) => (
+                                    <div key={idx} className={styles.arrayItemRow}>
+                                        <input placeholder="Company" value={work.company || ''} onChange={(e) => {
+                                            const arr = [...formData.pastworK]; arr[idx] = { ...arr[idx], company: e.target.value }; setFormData(prev => ({ ...prev, pastworK: arr }));
+                                        }} />
+                                        <input placeholder="Position" value={work.position || ''} onChange={(e) => {
+                                            const arr = [...formData.pastworK]; arr[idx] = { ...arr[idx], position: e.target.value }; setFormData(prev => ({ ...prev, pastworK: arr }));
+                                        }} />
+                                        <input placeholder="Years" value={work.years || ''} onChange={(e) => {
+                                            const arr = [...formData.pastworK]; arr[idx] = { ...arr[idx], years: e.target.value }; setFormData(prev => ({ ...prev, pastworK: arr }));
+                                        }} />
+                                        <button className={styles.rejectBtn} onClick={() => {
+                                            const arr = formData.pastworK.filter((_, i) => i !== idx); setFormData(prev => ({ ...prev, pastworK: arr }));
+                                        }}>Remove</button>
+                                    </div>
+                                ))}
+                                <button className={styles.acceptBtn} onClick={() => {
+                                    const arr = formData.pastworK ? [...formData.pastworK] : [];
+                                    arr.push({ company: '', position: '', years: '' });
+                                    setFormData(prev => ({ ...prev, pastworK: arr }));
+                                }}>Add Experience</button>
+                            </div>
+
+                            <div className={styles.formRow}>
+                                <label>Education</label>
+                                {formData.education && formData.education.map((edu, idx) => (
+                                    <div key={idx} className={styles.arrayItemRow}>
+                                        <input placeholder="School" value={edu.school || ''} onChange={(e) => {
+                                            const arr = [...formData.education]; arr[idx] = { ...arr[idx], school: e.target.value }; setFormData(prev => ({ ...prev, education: arr }));
+                                        }} />
+                                        <input placeholder="Degree" value={edu.degree || ''} onChange={(e) => {
+                                            const arr = [...formData.education]; arr[idx] = { ...arr[idx], degree: e.target.value }; setFormData(prev => ({ ...prev, education: arr }));
+                                        }} />
+                                        <input placeholder="Field Of Study" value={edu.fieldOfStudy || ''} onChange={(e) => {
+                                            const arr = [...formData.education]; arr[idx] = { ...arr[idx], fieldOfStudy: e.target.value }; setFormData(prev => ({ ...prev, education: arr }));
+                                        }} />
+                                        <button className={styles.rejectBtn} onClick={() => {
+                                            const arr = formData.education.filter((_, i) => i !== idx); setFormData(prev => ({ ...prev, education: arr }));
+                                        }}>Remove</button>
+                                    </div>
+                                ))}
+                                <button className={styles.acceptBtn} onClick={() => {
+                                    const arr = formData.education ? [...formData.education] : [];
+                                    arr.push({ school: '', degree: '', fieldOfStudy: '' });
+                                    setFormData(prev => ({ ...prev, education: arr }));
+                                }}>Add Education</button>
+                            </div>
+                        </section>
+                    )}
 
                     <section className={styles.section}>
                         <h3>About</h3>
@@ -134,11 +294,16 @@ const ProfilePage = () => {
                     </section>
 
                     <section className={styles.section}>
+                        <h3>Current Position</h3>
+                        <p>{profileData?.currentPost || "Not specified"}</p>
+                    </section>
+
+                    <section className={styles.section}>
                         <h3>Education</h3>
                         {education && education.length > 0 ? (
                             education.map((edu, index) => (
                                 <p key={index}>
-                                    <strong>{edu.degree}</strong> – {edu.institute}
+                                    <strong>{edu.degree}</strong> – {edu.school} {edu.fieldOfStudy ? `(${edu.fieldOfStudy})` : ''}
                                 </p>
                             ))
                         ) : (
@@ -151,7 +316,7 @@ const ProfilePage = () => {
                         {pastworK && pastworK.length > 0 ? (
                             pastworK.map((work, index) => (
                                 <p key={index}>
-                                    <strong>{work.role}</strong> – {work.company}
+                                    <strong>{work.position}</strong> – {work.company} {work.years ? `(${work.years})` : ''}
                                 </p>
                             ))
                         ) : (

@@ -14,7 +14,7 @@ import {
   postComment,
 } from "@/config/redux/action/postAction";
 import { resetPostId } from "@/config/redux/reducer/postReducer";
-import { getConnectionRequests, sendConnectionRequest } from "@/config/redux/action/authAction";
+import { getAboutUser, getAllUsers, getConnectionRequests, sendConnectionRequest, getReceivedConnectionRequests } from "@/config/redux/action/authAction";
 
 const getProfilePicture = (path) => {
   if (!path) return `${BASE_URL}/default.jpg`;
@@ -39,6 +39,7 @@ const ViewProfilePage = ({ profileData, error, onDownloadResume }) => {
   const [commentText, setCommentText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isConnectionNull,setIsConnectionNull]=useState(false);
+  const [isCurrentUserInReceivedConnections,setIsCurrentUserInReceivedConnections]=useState(false);
 
   // Fetch posts on page load
   useEffect(() => {
@@ -50,8 +51,13 @@ const ViewProfilePage = ({ profileData, error, onDownloadResume }) => {
       setIsLoading(true);
       dispatch(getAllPosts());
       dispatch(getConnectionRequests());
+      dispatch(getAboutUser({ token }));
+      dispatch(getReceivedConnectionRequests());
       setIsLoading(false);
     }
+    if (!authState.all_profiles_fetched) {
+          dispatch(getAllUsers());
+        }
   }, [authState.isTokenThere, dispatch]);
 
   // Filter posts for the profile user
@@ -69,6 +75,13 @@ const ViewProfilePage = ({ profileData, error, onDownloadResume }) => {
     const req = authState.connections?.find(
       (r) => r.connectionId?._id === profileData?.userId?._id
     );
+    
+    const reqReceived = authState.connectionRequests?.find(
+      (r) => r.userId?._id === profileData?.userId?._id
+    );
+
+    const isRequestReceived = !!reqReceived;
+    setIsCurrentUserInReceivedConnections(isRequestReceived);
 
     const isRequestSent = !!req;
     setIsCurrentUserInConnections(isRequestSent);
@@ -141,7 +154,7 @@ const ViewProfilePage = ({ profileData, error, onDownloadResume }) => {
             </div>
 
             <div className={styles.profileActions}>
-              {isCurrentUserInConnections ? (
+              {isCurrentUserInConnections || isCurrentUserInReceivedConnections ? (
                 <button className={styles.connectedButton} disabled>
                   {isConnectionNull ? "Pending" : "Connected"}
                 </button>
@@ -177,13 +190,18 @@ const ViewProfilePage = ({ profileData, error, onDownloadResume }) => {
             <p>{bio || "No bio added yet."}</p>
           </section>
 
+          <section className={styles.section}>
+            <h3>Current Position</h3>
+            <p>{profileData?.currentPost || "Not specified"}</p>
+          </section>
+
           {/* 🔹 Education */}
           <section className={styles.section}>
             <h3>Education</h3>
             {education && education.length > 0 ? (
               education.map((edu, index) => (
                 <p key={index}>
-                  <strong>{edu.degree}</strong> – {edu.institute}
+                  <strong>{edu.degree}</strong> – {edu.school} {edu.fieldOfStudy ? `(${edu.fieldOfStudy})` : ''}
                 </p>
               ))
             ) : (
@@ -197,7 +215,7 @@ const ViewProfilePage = ({ profileData, error, onDownloadResume }) => {
             {pastworK && pastworK.length > 0 ? (
               pastworK.map((work, index) => (
                 <p key={index}>
-                  <strong>{work.role}</strong> – {work.company}
+                  <strong>{work.position}</strong> – {work.company} {work.years ? `(${work.years})` : ''}
                 </p>
               ))
             ) : (
