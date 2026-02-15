@@ -1,0 +1,487 @@
+/* Copied from view_profile styles, can be adjusted specifically for profile page */
+/* =========================
+   Error Container
+========================= */
+.errorContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  width: 100%;
+}
+
+.errorContent {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 3rem 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 500px;
+}
+
+.errorContent h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #d11a2a;
+  margin-bottom: 1rem;
+}
+
+.errorContent p {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.backButton {
+  padding: 0.8rem 2rem;
+  background-color: #0a66c2;
+  color: #ffffff;
+  border: none;
+  border-radius: 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.backButton:hover {
+  background-color: #004182;
+  transform: scale(1.05);
+}
+
+/* =========================
+   Wrapper for whole profile
+========================= */
+.profileWrapper {
+  max-width: 600px;
+  margin: 30px auto;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Profile Header - Layout */
+.profileHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.profileLeftSection {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+/* Profile image */
+.profileImage {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+/* Basic info section */
+.profileInfo {
+  text-align: left;
+  flex: 1;
+}
+
+.profileInfo h2 {
+  margin: 0 0 6px 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Username */
+.username {
+  color: #2563eb;
+  font-size: 14px;
+  margin: 4px 0;
+  display: block;
+}
+
+/* Email */
+.email {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 4px 0;
+  display: block;
+}
+
+/* Profile Actions */
+.profileActions {
+  display: flex;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.downloadButton {
+  padding: 0.6rem 1.2rem;
+  background-color: #ffffff;
+  color: #0a66c2;
+  border: 1px solid #0a66c2;
+  border-radius: 24px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.12s ease, box-shadow 0.15s ease;
+  box-shadow: 0 2px 6px rgba(10, 102, 194, 0.06);
+}
+
+.downloadButton:hover {
+  background-color: #0a66c2;
+  color: #ffffff;
+  transform: scale(1.03);
+  box-shadow: 0 6px 16px rgba(10, 102, 194, 0.18);
+}
+
+.section {
+  margin-top: 24px;
+}
+
+.section h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+}
+
+.section p {
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.6;
+}
+
+.activityHeading {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.activityHeading h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+  position: relative;
+  padding-bottom: 0.8rem;
+  border-bottom: 3px solid #0a66c2;
+  display: inline-block;
+  min-width: 200px;
+  text-align: center;
+}
+
+.postsContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1.5rem;
+  gap: 1.2rem;
+}
+
+.postCard {
+  width: 70%;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.postHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.postUserInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.postUserImage {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.deleteBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.deleteBtn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.deleteBtn:hover {
+  background-color: #ffe5e5;
+  color: #d11a2a;
+}
+
+.postBody {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #333;
+}
+
+.postImage {
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.postActions {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 0.6rem;
+  border-top: 1px solid #e6e6e6;
+}
+
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.actionBtn svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.5;
+}
+
+.actionBtn:hover {
+  background-color: #f0f2f5;
+  color: #0a66c2;
+}
+
+.commentsContainer {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.allCommentsContainer {
+  width: 40vw;
+  height: 80vh;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 1.4rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.commentsList {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 4rem;
+}
+
+.commentCard {
+  padding: 0.7rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.commentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.commentUserInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.commentUserImage {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.commentUserInfo h5 {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.commentUserInfo span {
+  font-size: 0.75rem;
+  color: #777;
+}
+
+.commentBody {
+  margin-left: 44px;
+  margin-top: 4px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.createCommentContainer {
+  display: flex;
+  gap: 0.8rem;
+  position: absolute;
+  bottom: 1.4rem;
+  left: 1.4rem;
+  right: 1.4rem;
+}
+
+.createCommentContainer input {
+  flex: 1;
+  padding: 0.5rem 0.9rem;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+.createCommentContainer button {
+  padding: 0.45rem 1.1rem;
+  border-radius: 20px;
+  border: none;
+  background-color: #0a66c2;
+  color: #fff;
+  cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  .postCard {
+    width: 85%;
+  }
+
+  .allCommentsContainer {
+    width: 85vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .profileWrapper {
+    margin: 16px;
+    padding: 16px;
+  }
+
+  .profileHeader {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .profileLeftSection {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .profileImage {
+    width: 90px;
+    height: 90px;
+  }
+
+  .profileInfo {
+    text-align: center;
+  }
+
+  .profileActions {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .downloadButton {
+    flex: 1;
+    max-width: 200px;
+  }
+
+  .postCard {
+    width: 95%;
+  }
+
+  .allCommentsContainer {
+    width: 90vw;
+    height: 85vh;
+  }
+
+  .actionBtn svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profileWrapper {
+    margin: 8px;
+    padding: 12px;
+  }
+
+  .profileHeader {
+    gap: 1rem;
+  }
+
+  .profileLeftSection {
+    gap: 0.8rem;
+  }
+
+  .profileImage {
+    width: 80px;
+    height: 80px;
+  }
+
+  .profileInfo h2 {
+    font-size: 18px;
+  }
+
+  .username {
+    font-size: 12px;
+  }
+
+  .email {
+    font-size: 12px;
+  }
+
+  .postCard {
+    width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
