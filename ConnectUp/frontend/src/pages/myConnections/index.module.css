@@ -1,0 +1,188 @@
+.container {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #333;
+  font-weight: 600;
+}
+
+.noRequests {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #999;
+  padding: 40px 20px;
+}
+
+.requestsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.requestCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background-color: #fff;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.requestCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+.profileImage {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #eee;
+}
+
+.userDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.userName {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.username {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.email {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #999;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 110px;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.acceptBtn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.acceptBtn:hover:not(:disabled) {
+  background-color: #45a049;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+}
+
+.rejectBtn {
+  background-color: #f44336;
+  color: white;
+}
+
+.rejectBtn:hover:not(:disabled) {
+  background-color: #da190b;
+  box-shadow: 0 2px 8px rgba(244, 67, 54, 0.3);
+}
+
+.networkTitle {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  color: #333;
+  font-weight: 600;
+}
+
+.connectedCard {
+  border-color: #e8f5e9;
+  background-color: #f1f8f5;
+  border-left: 4px solid #4caf50;
+}
+
+.connectedCard:hover {
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.15);
+}
+
+.userInfo {
+  cursor: pointer;
+}
+
+.connectedBtn {
+  background-color: #4caf50;
+  color: white;
+  opacity: 0.8;
+  cursor: default;
+}
+
+.connectedBtn:disabled {
+  opacity: 0.8;
+  cursor: default;
+}
+
+@media (max-width: 768px) {
+  .requestCard {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .profileImage {
+    width: 50px;
+    height: 50px;
+  }
+
+  .actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .button {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+}

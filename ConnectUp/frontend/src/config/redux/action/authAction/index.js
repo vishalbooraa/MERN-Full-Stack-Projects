@@ -104,7 +104,7 @@ export const getReceivedConnectionRequests = createAsyncThunk(
       const response = await clientServer.get("/received_connection_request", {
         params: { token: localStorage.getItem("token") },
       });
-      return response.data;
+      return { requests: response.data.connections };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }

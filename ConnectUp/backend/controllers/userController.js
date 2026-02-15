@@ -196,33 +196,55 @@ export const downloadUserResume=async(req,res)=>{
     }
 }
 
-export const sendConnectionRequest=async(req,res)=>{
-    try{
-        const {token,connectionId}=req.body;
-        const user=await UserModel.findOne({token:token});
-        if(!user){
-            return res.status(401).json({message:"Unauthorized"});
-        }
-        const connectionUser=await UserModel.findById(connectionId);
-        if(!connectionUser){
-            return res.status(404).json({message:"User to connect not found"});
-        }
-       const existingRequest=await ConnectionRequestModel.findOne({
-        userId:user._id,
-        connectionId:connectionId
-       });
+export const sendConnectionRequest = async (req, res) => {
+  try {
+    const { token, connectionId } = req.body;
 
-       const request=new ConnectionRequestModel({
-        userId:user._id,
-        connectionId:connectionId,
-         });
-        await request.save();
-        return res.status(200).json({message:"Connection request sent successfully"});
-
-    }catch(error){
-        return res.status(500).json({message:error.message});
+    const user = await UserModel.findOne({ token });
+    if (!user) {
+      return res.status(401).json({ message: "Unauthorized" });
     }
-}
+    
+    if (user._id.toString() === connectionId) {
+      return res
+        .status(400)
+        .json({ message: "You cannot connect with yourself" });
+    }
+
+    const connectionUser = await UserModel.findById(connectionId);
+    if (!connectionUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const existingRequest = await ConnectionRequestModel.findOne({
+      $or: [
+        { userId: user._id, connectionId },
+        { userId: connectionId, connectionId: user._id },
+      ],
+    });
+
+    if (existingRequest) {
+      return res
+        .status(400)
+        .json({ message: "Connection request already exists" });
+    }
+
+    const request = new ConnectionRequestModel({
+      userId: user._id,
+      connectionId,
+      status_accepted: null, // pending
+    });
+
+    await request.save();
+
+    return res.status(200).json({
+      message: "Connection request sent successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 
 
 export const sentConnectionsRequests=async(req,res)=>{
@@ -243,7 +265,7 @@ export const sentConnectionsRequests=async(req,res)=>{
 
 export const recievedConnectionsRequests=async(req,res)=>{
     try{
-        const {token}=req.body;
+        const {token}=req.query;
         const user=await UserModel.findOne({token:token});
         if(!user){
             return res.status(401).json({message:"Unauthorized"});
