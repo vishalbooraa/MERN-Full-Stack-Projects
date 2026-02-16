@@ -14,7 +14,13 @@ import {
   postComment,
 } from "@/config/redux/action/postAction";
 import { resetPostId } from "@/config/redux/reducer/postReducer";
-import { getAboutUser, getAllUsers, getConnectionRequests, sendConnectionRequest, getReceivedConnectionRequests } from "@/config/redux/action/authAction";
+import {
+  getAboutUser,
+  getAllUsers,
+  getConnectionRequests,
+  sendConnectionRequest,
+  getReceivedConnectionRequests,
+} from "@/config/redux/action/authAction";
 
 const getProfilePicture = (path) => {
   if (!path) return `${BASE_URL}/default.jpg`;
@@ -34,37 +40,46 @@ const ViewProfilePage = ({ profileData, error, onDownloadResume }) => {
   const authState = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  const [isCurrentUserInConnections, setIsCurrentUserInConnections] = useState(false);
+  const [isCurrentUserInConnections, setIsCurrentUserInConnections] =
+    useState(false);
   const [profilePosts, setProfilePosts] = useState([]);
   const [commentText, setCommentText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isConnectionNull,setIsConnectionNull]=useState(false);
-  const [isCurrentUserInReceivedConnections,setIsCurrentUserInReceivedConnections]=useState(false);
+  const [isConnectionNull, setIsConnectionNull] = useState(false);
+  const [
+    isCurrentUserInReceivedConnections,
+    setIsCurrentUserInReceivedConnections,
+  ] = useState(false);
+  const [acceptedRecievedConnections, setAcceptedRecievedConnections] = useState(false);
 
   // Fetch posts on page load
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const token = localStorage.getItem("token");
-    if (!token) return;
 
-    if (authState.isTokenThere) {
+    const token = localStorage.getItem("token");
+    if (!token || !authState.isTokenThere) return;
+
+    const fetchData = async () => {
       setIsLoading(true);
-      dispatch(getAllPosts());
-      dispatch(getConnectionRequests());
-      dispatch(getAboutUser({ token }));
-      dispatch(getReceivedConnectionRequests());
-      setIsLoading(false);
-    }
-    if (!authState.all_profiles_fetched) {
-          dispatch(getAllUsers());
-        }
+
+      try {
+        await dispatch(getAllPosts());
+        await dispatch(getConnectionRequests());
+        await dispatch(getReceivedConnectionRequests());
+        await dispatch(getAboutUser({ token }));
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
   }, [authState.isTokenThere, dispatch]);
 
   // Filter posts for the profile user
   useEffect(() => {
     if (postState.posts && profileData?.userId?._id) {
       const filteredPosts = postState.posts.filter(
-        (post) => post.userId._id === profileData.userId._id
+        (post) => post.userId._id === profileData.userId._id,
       );
       setProfilePosts(filteredPosts);
     }
@@ -73,11 +88,11 @@ const ViewProfilePage = ({ profileData, error, onDownloadResume }) => {
   // Check if current user is in connections and whether it's pending
   useEffect(() => {
     const req = authState.connections?.find(
-      (r) => r.connectionId?._id === profileData?.userId?._id
+      (r) => r.connectionId?._id === profileData?.userId?._id,
     );
-    
+
     const reqReceived = authState.connectionRequests?.find(
-      (r) => r.userId?._id === profileData?.userId?._id
+      (r) => r.userId?._id === profileData?.userId?._id,
     );
 
     const isRequestReceived = !!reqReceived;
@@ -86,8 +101,12 @@ const ViewProfilePage = ({ profileData, error, onDownloadResume }) => {
     const isRequestSent = !!req;
     setIsCurrentUserInConnections(isRequestSent);
     setIsConnectionNull(req ? req.status_accepted === null : false);
-  }, [authState.connections, profileData?.userId?._id]);
-
+    setAcceptedRecievedConnections(reqReceived ? reqReceived.status_accepted === true : false);
+  }, [
+    authState.connections,
+    profileData?.userId?._id,
+    authState.connectionRequests,
+  ]);
 
   // Error handling
   if (error) {
@@ -98,7 +117,7 @@ const ViewProfilePage = ({ profileData, error, onDownloadResume }) => {
             <div className={styles.errorContent}>
               <h2>Profile Not Found</h2>
               <p>{error}</p>
-              <button 
+              <button
                 className={styles.backButton}
                 onClick={() => router.push("/dashboard")}
               >
@@ -120,7 +139,7 @@ const ViewProfilePage = ({ profileData, error, onDownloadResume }) => {
             <div className={styles.errorContent}>
               <h2>User Profile Not Available</h2>
               <p>We couldn't find the profile you're looking for.</p>
-              <button 
+              <button
                 className={styles.backButton}
                 onClick={() => router.push("/dashboard")}
               >
@@ -154,27 +173,35 @@ const ViewProfilePage = ({ profileData, error, onDownloadResume }) => {
             </div>
 
             <div className={styles.profileActions}>
-              {isCurrentUserInConnections || isCurrentUserInReceivedConnections ? (
+              {isCurrentUserInReceivedConnections ? (
+                <button className={styles.connectedButton} disabled>
+                  {acceptedRecievedConnections ? "Connected" : "Request Received"}
+                </button>
+              ) : isCurrentUserInConnections ? (
                 <button className={styles.connectedButton} disabled>
                   {isConnectionNull ? "Pending" : "Connected"}
                 </button>
               ) : (
                 <button
                   className={styles.connectButton}
-                  onClick={ async() =>{
-                    setIsConnectionNull(true);
-                    await dispatch(sendConnectionRequest({ _id: profileData.userId._id }));
+                  onClick={async () => {
+                    await dispatch(
+                      sendConnectionRequest({ _id: profileData.userId._id }),
+                    );
                     await dispatch(getConnectionRequests());
-                    }}
+                  }}
                 >
                   + Connect
                 </button>
               )}
+
               {/* Download Resume button - calls prop handler if provided, else opens resume URL if present */}
               <button
                 className={styles.downloadButton}
-                onClick={async() => {
-                  const response= await clientServer.get(`/download_user_resume?id=${profileData.userId._id}`);
+                onClick={async () => {
+                  const response = await clientServer.get(
+                    `/download_user_resume?id=${profileData.userId._id}`,
+                  );
                   window.open(`${BASE_URL}/${response.data.message}`, "_blank");
                 }}
                 title="Download Resume"
@@ -201,7 +228,8 @@ const ViewProfilePage = ({ profileData, error, onDownloadResume }) => {
             {education && education.length > 0 ? (
               education.map((edu, index) => (
                 <p key={index}>
-                  <strong>{edu.degree}</strong> – {edu.school} {edu.fieldOfStudy ? `(${edu.fieldOfStudy})` : ''}
+                  <strong>{edu.degree}</strong> – {edu.school}{" "}
+                  {edu.fieldOfStudy ? `(${edu.fieldOfStudy})` : ""}
                 </p>
               ))
             ) : (
@@ -215,7 +243,8 @@ const ViewProfilePage = ({ profileData, error, onDownloadResume }) => {
             {pastworK && pastworK.length > 0 ? (
               pastworK.map((work, index) => (
                 <p key={index}>
-                  <strong>{work.position}</strong> – {work.company} {work.years ? `(${work.years})` : ''}
+                  <strong>{work.position}</strong> – {work.company}{" "}
+                  {work.years ? `(${work.years})` : ""}
                 </p>
               ))
             ) : (
@@ -416,10 +445,10 @@ const ViewProfilePage = ({ profileData, error, onDownloadResume }) => {
                           className={styles.deleteBtn}
                           onClick={async () => {
                             await dispatch(
-                              deleteComment({ commentId: comment._id })
+                              deleteComment({ commentId: comment._id }),
                             );
                             await dispatch(
-                              getAllComments({ postId: postState.postId })
+                              getAllComments({ postId: postState.postId }),
                             );
                           }}
                         >
@@ -461,12 +490,12 @@ const ViewProfilePage = ({ profileData, error, onDownloadResume }) => {
                       postComment({
                         postId: postState.postId,
                         body: commentText,
-                      })
+                      }),
                     );
 
                     setCommentText("");
                     await dispatch(
-                      getAllComments({ postId: postState.postId })
+                      getAllComments({ postId: postState.postId }),
                     );
                   }}
                 >
